@@ -2,12 +2,13 @@ pocket
 ======
 
 ##Introduction
+A web application(powered by [flask](http://flask.pocoo.org/) for managing a reading list of articles from the Internet.
 
-A web application(powered by [flask](http://flask.pocoo.org/) to Read it later like [pocket](http://getpocket.com).
+like [pocket](http://getpocket.com).
 
-##Usage
+##Functions
 
-Add link to read it later.
+The application allows the user to save an article or web page to read later.
 
 ##Other
 
