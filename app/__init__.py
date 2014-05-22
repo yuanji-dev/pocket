@@ -1,3 +1,4 @@
+#encoding=utf-8
 from flask import Flask
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.login import LoginManager
@@ -5,6 +6,9 @@ from flask.ext.login import LoginManager
 
 db = SQLAlchemy()
 login_manager = LoginManager()
+login_manager.login_view = 'main.login'
+#use encoding=utf-8
+login_manager.login_message = u'你好'
 
 
 def create_app(config_object):

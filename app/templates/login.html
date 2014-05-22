@@ -8,6 +8,7 @@
     {{ form.csrf_token }}
     {{ form.email.label }} {{ form.email }}
     {{ form.password.label }} {{ form.password }}
+    {{ form.remember.label }} {{ form.remember }}
     {{ form.submit }}
     {% for err in form.errors.email %}{{ err }}{% endfor %}
     {% for err in form.errors.password %}{{ err }}{% endfor %}

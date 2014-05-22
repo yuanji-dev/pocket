@@ -3,12 +3,14 @@ from flask import Blueprint, flash
 from flask import render_template, redirect
 from flask.ext.login import login_user, login_required, logout_user
 from models import User
-from forms import LoginForm
+from forms import LoginForm, RegisterForm
+from app import db
 
-main = Blueprint('index', __name__)
+main = Blueprint('main', __name__)
 
 
 @main.route('/')
+@login_required  #login message?
 def index():
     users = User.query.all()
     return render_template('index.html', users=users)
@@ -20,7 +22,8 @@ def login():
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
         if user is not None and user.check_password(form.password.data):
-            login_user(user)
+            #todo remember time fresh? how long remember?
+            login_user(user, form.remember.data)
             return redirect('/')
         flash('Invalid email or password')
     return render_template('login.html', form=form)
@@ -34,6 +37,15 @@ def logout():
     return redirect('/')
 
 
-@main.route('/register')
+@main.route('/register', methods=['GET', 'POST'])
 def register():
-    #todo add register view
+    form = RegisterForm()
+    if form.validate_on_submit():
+        user = User(name=form.username.data,
+                    email=form.email.data,
+                    password=form.password.data)
+        db.session.add(user)
+        db.session.commit()
+        flash('you have successfully registered an account.')
+        return redirect('/')
+    return render_template('register.html', form=form)
