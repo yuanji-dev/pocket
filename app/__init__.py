@@ -16,6 +16,7 @@ def create_app(config_object):
 
     #avoid circular import.
     from app.views import main
+
     app.register_blueprint(main)
 
     return app

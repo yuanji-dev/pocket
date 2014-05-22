@@ -13,7 +13,8 @@ def index():
     users = User.query.all()
     return render_template('index.html', users=users)
 
-@main.route('/login', methods=['GET','POST'])
+
+@main.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
     if form.validate_on_submit():
@@ -24,9 +25,15 @@ def login():
         flash('Invalid email or password')
     return render_template('login.html', form=form)
 
+
 @main.route('/logout')
 @login_required
 def logout():
     logout_user()
     flash('you have logged out')
     return redirect('/')
+
+
+@main.route('/register')
+def register():
+    #todo add register view
