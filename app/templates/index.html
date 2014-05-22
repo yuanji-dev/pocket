@@ -4,10 +4,7 @@
     <title>index</title>
 </head>
 <body>
-{% for user in users %}
-{% for item in user.items %}
-    {{ item.link }}
-{% endfor %}
-{% endfor %}
+{% for msg in get_flashed_messages() %}{{ msg }}{% endfor %}
+{% if current_user.is_authenticated() %}{{ current_user.name }}{% else %}unknow{% endif %}
 </body>
 </html>

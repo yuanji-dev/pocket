@@ -10,6 +10,7 @@ class Config(object):
 class DevelopmentConfig(Config):
     DEBUG = True
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'dev-date.sqlite')
+    SECRET_KEY = 'hello'
 
 
 class ProductionConfig(Config):

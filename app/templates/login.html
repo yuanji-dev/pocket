@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>login</title>
+</head>
+<body>
+<form method="POST">
+    {{ form.csrf_token }}
+    {{ form.email.label }} {{ form.email }}
+    {{ form.password.label }} {{ form.password }}
+    {{ form.submit }}
+    {% for err in form.errors.email %}{{ err }}{% endfor %}
+    {% for err in form.errors.password %}{{ err }}{% endfor %}
+    {% for msg in get_flashed_messages() %}{{ msg }}{% endfor %}
+</form>
+</body>
+</html>
