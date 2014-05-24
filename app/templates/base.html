@@ -11,7 +11,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">Brand</a>
+                <a class="navbar-brand" href="{{ url_for('main.index') }}">Pocket</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -32,11 +32,9 @@
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Account <b class="caret"></b></a>
                             <ul class="dropdown-menu">
-                                <li><a href="#">Action</a></li>
-                                <li><a href="#">Another action</a></li>
-                                <li><a href="#">Something else here</a></li>
+                                <li><a href="{{ url_for('main.add') }}">Add</a></li>
                                 <li class="divider"></li>
-                                <li><a href="#">Separated link</a></li>
+                                <li><a href="{{ url_for('main.logout') }}">Logout</a></li>
                             </ul>
                         </li>
                     {% else %}

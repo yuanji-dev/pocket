@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 from flask import Blueprint, flash
 from flask import render_template, redirect, url_for
-from flask.ext.login import login_user, login_required, logout_user
-from models import User
-from forms import LoginForm, RegisterForm
+from flask.ext.login import login_user, login_required, logout_user, current_user
+from models import User, Item
+from forms import LoginForm, RegisterForm, AddItemForm
 from app import db
 #todo add use readability to parse url?
 
@@ -50,3 +50,17 @@ def register():
         flash('you have successfully registered an account.')
         return redirect(url_for('.index'))
     return render_template('register.html', form=form)
+
+
+@main.route('/add', methods=['GET', 'POST'])
+@login_required
+def add():
+    form = AddItemForm()
+    if form.validate_on_submit():
+        item = Item(link=form.link.data)
+        current_user.items.append(item)
+        db.session.add(current_user)
+        db.session.commit()
+        flash('a new item added.')
+        return redirect(url_for('.index'))
+    return render_template('add.html', form=form)

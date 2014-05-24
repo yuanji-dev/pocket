@@ -2,3 +2,7 @@
 {% block title %}
     index
 {% endblock %}
+{% block main %}
+    {% if current_user.is_authenticated() %}
+        {% for item in current_user.items %}{{ item.link }}{% endfor %}{% else %}nothing{% endif %}
+{% endblock %}

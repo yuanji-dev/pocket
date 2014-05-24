@@ -16,7 +16,7 @@ class LoginForm(Form):
 
 class RegisterForm(Form):
     email = StringField('Email', validators=[Required(), Length(1, 64), Email(message='wrong email.')])
-    #add re check.
+    #todo add re check.
     username = StringField('Username', validators=[Required()])
     password = PasswordField('Password',
                              validators=[Required(), EqualTo('repassword', message='Passwords dont match.')])
@@ -30,3 +30,9 @@ class RegisterForm(Form):
     def validate_username(self, field):
         if User.query.filter_by(name=field.data).first():
             raise ValidationError('Username has been registered.')
+
+
+#todo link regex
+class AddItemForm(Form):
+    link = StringField('Link', validators=[Required()])
+    submit = SubmitField('Add')
