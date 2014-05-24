@@ -1,7 +1,6 @@
 from app import db, login_manager
 from flask.ext.login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
-#user add password hash.
 #item add star, type, archive, etc.
 
 tag_item = db.Table('tag_item',

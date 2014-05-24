@@ -1,10 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>index</title>
-</head>
-<body>
-{% for msg in get_flashed_messages() %}{{ msg }}{% endfor %}
-{% if current_user.is_authenticated() %}{{ current_user.name }}{% else %}unknow{% endif %}
-</body>
-</html>
+{% extends 'base.html' %}
+{% block title %}
+    index
+{% endblock %}

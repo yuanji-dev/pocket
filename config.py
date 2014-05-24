@@ -11,6 +11,7 @@ class DevelopmentConfig(Config):
     DEBUG = True
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'dev-date.sqlite')
     SECRET_KEY = 'hello'
+    BOOTSTRAP_SERVE_LOCAL = True
 
 
 class ProductionConfig(Config):
