@@ -1,7 +1,8 @@
 from app import db, login_manager
 from flask.ext.login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
-#item add star, type, archive, etc.
+#todo item add star, type, archive, etc.
+#todo review length of field.
 
 tag_item = db.Table('tag_item',
                     db.Column('tag_id', db.Integer, db.ForeignKey('tags.id')),
@@ -42,6 +43,9 @@ class Item(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     link = db.Column(db.String)
     #add a title?
+    title = db.Column(db.String)
+    is_star = db.Column(db.Boolean)
+    is_archive = db.Column(db.Boolean)
     content = db.Column(db.Text)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     tags = db.relationship('Tag', secondary=tag_item, backref=db.backref('items', lazy='dynamic'))

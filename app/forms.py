@@ -3,7 +3,7 @@ from wtforms import StringField, PasswordField, BooleanField, SubmitField
 from wtforms.validators import Required, Length, Email, Regexp, EqualTo
 from wtforms import ValidationError
 from models import User
-
+#todo add i18n support.
 
 class LoginForm(Form):
     #length?
@@ -33,6 +33,7 @@ class RegisterForm(Form):
 
 
 #todo link regex
+#todo add validators
 class AddItemForm(Form):
     link = StringField('Link', validators=[Required()])
     tags = StringField('Tags')
