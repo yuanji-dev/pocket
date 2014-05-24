@@ -3,7 +3,7 @@ from flask.ext.login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 #todo item add star, type, archive, etc.
 #todo review length of field.
-
+#todo learn about column default value.
 tag_item = db.Table('tag_item',
                     db.Column('tag_id', db.Integer, db.ForeignKey('tags.id')),
                     db.Column('item_id', db.Integer, db.ForeignKey('items.id'))
