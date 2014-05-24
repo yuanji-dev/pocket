@@ -2,7 +2,7 @@
 from flask import Blueprint, flash
 from flask import render_template, redirect, url_for
 from flask.ext.login import login_user, login_required, logout_user, current_user
-from models import User, Item
+from models import User, Item, Tag
 from forms import LoginForm, RegisterForm, AddItemForm
 from app import db
 #todo add use readability to parse url?
@@ -58,9 +58,27 @@ def add():
     form = AddItemForm()
     if form.validate_on_submit():
         item = Item(link=form.link.data)
+        if form.tags.data:
+            tags = form.tags.data.split(',')
+            for tag in tags:
+                if Tag.query.filter_by(name=tag).first():
+                    item.tags.append(Tag.query.filter_by(name=tag).first())
+                else:
+                    item.tags.append(Tag(name=tag))
         current_user.items.append(item)
         db.session.add(current_user)
         db.session.commit()
         flash('a new item added.')
         return redirect(url_for('.index'))
     return render_template('add.html', form=form)
+
+
+@main.route('/del/<id>')
+@login_required
+def delete(id):
+    item = Item.query.filter_by(id=id).first()
+    current_user.items.remove(item)
+    db.session.add(current_user)
+    db.session.delete(item)
+    db.session.commit()
+    return redirect(url_for('.index'))

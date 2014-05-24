@@ -35,4 +35,5 @@ class RegisterForm(Form):
 #todo link regex
 class AddItemForm(Form):
     link = StringField('Link', validators=[Required()])
+    tags = StringField('Tags')
     submit = SubmitField('Add')
