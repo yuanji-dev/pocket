@@ -1,9 +1,10 @@
 from app import db, login_manager
 from flask.ext.login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
-#todo item add star, type, archive, etc.
+from datetime import datetime
+#todo add if a user is confirmed.
 #todo review length of field.
-#todo learn about column default value.
+#todo understand what the lazy in column mean.
 tag_item = db.Table('tag_item',
                     db.Column('tag_id', db.Integer, db.ForeignKey('tags.id')),
                     db.Column('item_id', db.Integer, db.ForeignKey('items.id'))
@@ -14,8 +15,10 @@ class User(UserMixin, db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(length=64), unique=True, index=True)
-    email = db.Column(db.String(64), unique=True, index=True)
-    password_hash = db.Column(db.String(128))
+    email = db.Column(db.String(length=64), unique=True, index=True)
+    password_hash = db.Column(db.String(length=128))
+    added_time = db.Column(db.DateTime, default=datetime.utcnow)
+    is_confirmed = db.Column(db.Boolean, default=False)
     items = db.relationship('Item', backref='user', lazy='dynamic')
 
     def __repr__(self):
@@ -42,11 +45,12 @@ class Item(db.Model):
     __tablename__ = 'items'
     id = db.Column(db.Integer, primary_key=True)
     link = db.Column(db.String)
-    #add a title?
+    domain = db.Column(db.String)
     title = db.Column(db.String)
-    is_star = db.Column(db.Boolean)
-    is_archive = db.Column(db.Boolean)
     content = db.Column(db.Text)
+    added_time = db.Column(db.DateTime, default=datetime.utcnow)
+    is_star = db.Column(db.Boolean, default=False)
+    is_archive = db.Column(db.Boolean, default=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     tags = db.relationship('Tag', secondary=tag_item, backref=db.backref('items', lazy='dynamic'))
 
@@ -57,7 +61,7 @@ class Item(db.Model):
 class Tag(db.Model):
     __tablename__ = 'tags'
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String)
+    name = db.Column(db.String(length=64))
 
     def __repr__(self):
         return '<Tag %r>' % self.name

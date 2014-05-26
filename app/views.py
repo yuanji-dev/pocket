@@ -10,8 +10,14 @@ from app import db
 main = Blueprint('main', __name__)
 
 
+@main.before_app_request  #todo what does this mean?
+def before_request():
+    if current_user.is_authenticated():
+        if not current_user.is_confirmed:
+            return "you are not confirmed."
+
+
 @main.route('/')
-#@login_required  #login message?
 def index():
     users = User.query.all()
     return render_template('index.html', users=users)
