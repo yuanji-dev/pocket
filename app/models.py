@@ -2,6 +2,7 @@ from app import db, login_manager
 from flask.ext.login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
+#todo count user's tags.
 #todo add if a user is confirmed.
 #todo review length of field.
 #todo understand what the lazy in column mean.

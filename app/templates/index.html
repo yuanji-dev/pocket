@@ -3,6 +3,18 @@
     index
 {% endblock %}
 {% block main %}
-    {% if current_user.is_authenticated() %}
-        {% for item in current_user.items %}{{ item.link }}{% endfor %}{% else %}nothing{% endif %}
+    <div class="container">
+
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">{% if current_user.is_authenticated() %}
+                {% for item in current_user.items %}{{ item.link }}
+                    <div class="bs-example">
+                    {% for tag in item.tags %}<span class="label label-info">{{ tag.name }}</span>{% endfor %}
+                    </div>{% endfor %}{% else %}nothing{% endif %}
+
+
+            </div>
+        </div>
+
+    </div>
 {% endblock %}
