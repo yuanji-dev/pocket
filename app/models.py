@@ -2,6 +2,7 @@ from app import db, login_manager
 from flask.ext.login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
+from collections import Counter
 #todo count user's tags.
 #todo add if a user is confirmed.
 #todo review length of field.
@@ -35,6 +36,21 @@ class User(UserMixin, db.Model):
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
+
+    def get_tags(self):
+        tags = []
+        items = self.items
+        if not items:
+            return None
+        else:
+            for item in items:
+                if item.tags:
+                    for tag in item.tags:
+                        tags.append(tag.name)
+            if not tags:
+                return None
+            else:
+                return Counter(tags).items()
 
 
 @login_manager.user_loader
