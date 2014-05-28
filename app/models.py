@@ -3,6 +3,9 @@ from flask.ext.login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
 from collections import Counter
+import urllib2
+import json
+#todo use many to many model between user and item.
 #todo add if a user is confirmed.
 #todo review length of field.
 #todo understand what the lazy in column mean.
@@ -63,6 +66,8 @@ class Item(db.Model):
     link = db.Column(db.String)
     domain = db.Column(db.String)
     title = db.Column(db.String)
+    image = db.Column(db.String)
+    author = db.Column(db.String)
     content = db.Column(db.Text)
     added_time = db.Column(db.DateTime, default=datetime.utcnow)
     is_star = db.Column(db.Boolean, default=False)
@@ -72,6 +77,17 @@ class Item(db.Model):
 
     def __repr__(self):
         return '<Item %r>' % self.id
+
+
+    def parse_html(self):
+        req = urllib2.urlopen()
+        res = req.read()
+        parsed_item = json.loads(res)
+        self.domain = parsed_item['domain']
+        self.title = parsed_item['title']
+        self.image = parsed_item['lead_image_url']
+        self.author = parsed_item['author']
+        self.content = parsed_item['content']
 
 
 class Tag(db.Model):
