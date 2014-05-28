@@ -79,6 +79,7 @@ class Item(db.Model):
         return '<Item %r>' % self.id
 
 
+    #todo use another thread to parse html to make app more responsive.
     def parse_html(self):
         req = urllib2.urlopen()
         res = req.read()
