@@ -5,6 +5,7 @@ from datetime import datetime
 from collections import Counter
 import urllib2
 import json
+#todo save it forever powerful search suggested tags.
 #todo add email func
 #todo use many to many model between user and item.
 #todo add if a user is confirmed.
