@@ -1,10 +1,15 @@
-from app import db, login_manager
-from flask.ext.login import UserMixin
-from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
+
 from collections import Counter
 import urllib2
 import json
+
+from flask.ext.login import UserMixin
+from werkzeug.security import generate_password_hash, check_password_hash
+
+from app import db, login_manager
+
+from config import Config
 #todo save it forever powerful search suggested tags.
 #todo add email func
 #todo use many to many model between user and item.
@@ -83,7 +88,10 @@ class Item(db.Model):
 
     #todo use another thread to parse html to make app more responsive.
     def parse_html(self):
-        req = urllib2.urlopen()
+        readability_api_url = Config.READABILITY_API_URL
+        readability_token = Config.READABILITY_TOKEN
+        full_url = readability_api_url.format(self.link, readability_token)
+        req = urllib2.urlopen(full_url)
         res = req.read()
         parsed_item = json.loads(res)
         self.domain = parsed_item['domain']

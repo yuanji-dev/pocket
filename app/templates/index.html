@@ -9,6 +9,7 @@
             <div class="col-sm-8 blog-main">{% if current_user.is_authenticated() %}
                 {% for item in current_user.items %}{{ item.link }}
                     <div class="bs-example">
+                        {{ item.content|safe }}
                         {% for tag in item.tags %}<span class="label label-info">{{ tag.name }}</span>{% endfor %}
                     </div>{% endfor %}{% else %}nothing{% endif %}
 

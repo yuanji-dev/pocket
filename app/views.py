@@ -64,6 +64,8 @@ def add():
     form = AddItemForm()
     if form.validate_on_submit():
         item = Item(link=form.link.data)
+        # todo add error handler.
+        item.parse_html()
         if form.tags.data:
             tags = form.tags.data.split(',')
             for tag in tags:
