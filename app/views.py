@@ -90,3 +90,8 @@ def delete(id):
     db.session.delete(item)
     db.session.commit()
     return redirect(url_for('.index'))
+
+
+@main.route('/a/<id>')
+@login_required
+def a(id):
