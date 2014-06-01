@@ -19,6 +19,7 @@ from config import Config
 #todo add if a user is confirmed.
 #todo review length of field.
 #todo understand what the lazy in column mean.
+# todo add api for cross-platform use.etc: CLI, mobile device, desktop etc;
 tag_item = db.Table('tag_item',
                     db.Column('tag_id', db.Integer, db.ForeignKey('tags.id')),
                     db.Column('item_id', db.Integer, db.ForeignKey('items.id'))
