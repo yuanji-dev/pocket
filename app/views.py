@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from flask import Blueprint, flash
+from flask import Blueprint, flash, request
 from flask import render_template, redirect, url_for
 from flask.ext.login import login_user, login_required, logout_user, current_user
 from models import User, Item, Tag
@@ -34,7 +34,7 @@ def login():
         if user is not None and user.check_password(form.password.data):
             #todo remember time fresh? how long remember?
             login_user(user, form.remember.data)
-            return redirect(url_for('.index'))
+            return redirect(request.args.get('next') or url_for('.index'))
         flash('Invalid email or password')
     return render_template('login.html', form=form)
 
