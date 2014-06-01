@@ -5,8 +5,11 @@ from flask.ext.login import login_user, login_required, logout_user, current_use
 from models import User, Item, Tag
 from forms import LoginForm, RegisterForm, AddItemForm
 from app import db
-#todo add use readability to parse url?
-
+# todo del/star/archive view func.
+#todo add modify item func. eg:title etc.
+#todo add search func. use ajax to auto-complete.
+#todo add participle as tag?
+#todo add pagination
 main = Blueprint('main', __name__)
 
 
