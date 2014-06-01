@@ -101,6 +101,11 @@ class Item(db.Model):
         self.content = parsed_item['content']
 
 
+    # todo add/modify add_tags fun.
+    def add_tags(self):
+        pass
+
+
 class Tag(db.Model):
     __tablename__ = 'tags'
     id = db.Column(db.Integer, primary_key=True)
