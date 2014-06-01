@@ -95,3 +95,5 @@ def delete(id):
 @main.route('/a/<id>')
 @login_required
 def a(id):
+    item = Item.query.filter_by(id=id).first()
+    return render_template('a.html', item=item)

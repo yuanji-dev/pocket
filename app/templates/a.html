@@ -7,11 +7,11 @@
 
         <div class="row">
             <div class="col-sm-8 blog-main">{% if current_user.is_authenticated() %}
-                {% for item in current_user.items %}<a href="{{ url_for('main.a', id=item.id) }}">{{ item.title }}</a>
-                    <div class="bs-example">
-                        {% for tag in item.tags %}<span class="label label-info">{{ tag.name }}</span>{% endfor %}<span
-                                class="label label-primary">{{ item.domain }}</span>
-                    </div>{% endfor %}{% else %}nothing{% endif %}
+                <h1> {{ item.title }}</h1>
+                <div class="bs-example">
+                    {{ item.content|safe }}
+                    {% for tag in item.tags %}<span class="label label-info">{{ tag.name }}</span>{% endfor %}
+                </div>{% else %}nothing{% endif %}
 
 
             </div>
