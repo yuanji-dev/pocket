@@ -10,6 +10,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from app import db, login_manager
 
 from config import Config
+# todo add user last_seen time
+# todo add item_read time
 #todo save it forever powerful search suggested tags.
 #todo add email func
 #todo use many to many model between user and item.
