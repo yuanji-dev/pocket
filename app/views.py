@@ -10,6 +10,7 @@ from app import db
 #todo add search func. use ajax to auto-complete.
 #todo add participle as tag?
 #todo add pagination
+# todo add rss subscription.
 main = Blueprint('main', __name__)
 
 
