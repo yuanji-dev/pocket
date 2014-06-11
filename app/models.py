@@ -10,6 +10,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from app import db, login_manager
 
 from config import Config
+from flask import abort, flash
 # todo add timeline for item.
 #todo add user last_seen time
 #todo add item_read time
@@ -95,14 +96,19 @@ class Item(db.Model):
         readability_api_url = Config.READABILITY_API_URL
         readability_token = Config.READABILITY_TOKEN
         full_url = readability_api_url.format(self.link, readability_token)
-        req = urllib2.urlopen(full_url)
-        res = req.read()
-        parsed_item = json.loads(res)
-        self.domain = parsed_item['domain']
-        self.title = parsed_item['title']
-        self.image = parsed_item['lead_image_url']
-        self.author = parsed_item['author']
-        self.content = parsed_item['content']
+        try:
+            req = urllib2.urlopen(full_url)
+            res = req.read()
+            parsed_item = json.loads(res)
+            self.domain = parsed_item['domain']
+            self.title = parsed_item['title']
+            self.image = parsed_item['lead_image_url']
+            self.author = parsed_item['author']
+            self.content = parsed_item['content']
+        except:
+            # todo use user-friendly error handler.
+            abort(400)
+
 
 
     # todo add/modify add_tags fun.

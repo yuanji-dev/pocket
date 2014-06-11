@@ -7,6 +7,7 @@ class Config(object):
     DEBUG = False
     READABILITY_TOKEN = os.environ.get('READABILITY_TOKEN')
     READABILITY_API_URL = os.environ.get('READABILITY_API_URL')
+    HTTP_HEADERS = {}
 
 
 class DevelopmentConfig(Config):
