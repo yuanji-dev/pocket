@@ -8,23 +8,31 @@
         <div class="row">
             <div class="col-sm-8 blog-main">
                 {% if current_user.is_authenticated() %}
-                <h1> {{ item.title }}</h1>
-                <div class="bs-example">
-                    {{ item.content|safe }}
-                    {% for tag in item.tags %}
-                        <span class="label label-info">{{ tag.name }}</span>
-                    {% endfor %}
-                </div>
+                    <h1> {{ item.title }}
+                        {% if not item.is_star %}
+                            <a href="{{ url_for('main.star', id=item.id, next=url_for('main.a', id=item.id)) }}"><span
+                                    class="glyphicon glyphicon-star-empty"></span></a>
+                        {% else %}
+                            <a href="{{ url_for('main.rmstar', id=item.id, next=url_for('main.a', id=item.id)) }}"><span
+                                    class="glyphicon glyphicon-star"></span></a>
+                        {% endif %}
+                    </h1>
+                    <div class="bs-example">
+                        {{ item.content|safe }}
+                        {% for tag in item.tags %}
+                            <span class="label label-info">{{ tag.name }}</span>
+                        {% endfor %}
+                    </div>
                 {% else %}nothing{% endif %}
             </div>
 
             {% if current_user.is_authenticated() %}
                 <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
-                {% for tag in item.tags %}
-                    <div class="bs-example">
-                        <span class="label label-info">{{ tag.name }}</span>
-                    </div>
-                {% endfor %}
+                    {% for tag in item.tags %}
+                        <div class="bs-example">
+                            <span class="label label-info">{{ tag.name }}</span>
+                        </div>
+                    {% endfor %}
                 </div>
             {% else %}nothing{% endif %}
         </div>
