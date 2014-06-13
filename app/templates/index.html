@@ -24,7 +24,6 @@
                 <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
                 {% for tag,count in current_user.get_tags() %}
                     <div class="bs-example">
-                        <span class="glyphicon glyphicon-tag"></span>
                         <span class="label label-info">{{ tag }}</span>
                         <span class="badge">{{ count }}</span>
                     </div>
