@@ -10,8 +10,13 @@
                 {% if current_user.is_authenticated() %}
                     {% for item in current_user.items %}
                         <a href="{{ url_for('main.a', id=item.id) }}">{{ item.title }}</a>
-                        <a href="{{ url_for('main.a', id=item.id) }}"><span
+                        {% if not item.is_star %}
+                            <a href="{{ url_for('main.star', id=item.id) }}"><span
                                 class="glyphicon glyphicon-star-empty"></span></a>
+                        {% else %}
+                            <a href="{{ url_for('main.star', id=item.id) }}"><span
+                                    class="glyphicon glyphicon-star"></span></a>
+                        {% endif %}
                         <div class="bs-example">
                             {% for tag in item.tags %}
                                 <span class="label label-info">{{ tag.name }}</span>
