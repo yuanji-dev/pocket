@@ -50,7 +50,8 @@
 {% endblock %}
 {% block content %}
     {% for msg in get_flashed_messages() %}
-        <div class="alert alert-danger">{{ msg }}</div>{% endfor %}
+        <div class="alert alert-danger">{{ msg }}</div>
+    {% endfor %}
     {% block main %}
     {% endblock %}
 {% endblock %}
