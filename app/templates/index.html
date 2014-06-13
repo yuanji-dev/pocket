@@ -10,6 +10,8 @@
                 {% if current_user.is_authenticated() %}
                     {% for item in current_user.items %}
                         <a href="{{ url_for('main.a', id=item.id) }}">{{ item.title }}</a>
+                        <a href="{{ url_for('main.a', id=item.id) }}"><span
+                                class="glyphicon glyphicon-star-empty"></span></a>
                         <div class="bs-example">
                             {% for tag in item.tags %}
                                 <span class="label label-info">{{ tag.name }}</span>

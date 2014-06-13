@@ -101,3 +101,19 @@ def delete(id):
 def a(id):
     item = Item.query.filter_by(id=id).first()
     return render_template('a.html', item=item)
+
+
+@main.route('/star/<id>')
+@login_required
+def star(id):
+    item = Item.query.filter_by(id=id).first()
+    items = current_user.items.all()
+    if item not in items:
+        flash('this item is not yours.')
+        return redirect(request.args.get('next') or url_for('.index'))
+    else:
+        item.is_star = True
+        db.session.add(item)
+        db.session.commit()
+        flash('you starred the item.')
+        return redirect(request.args.get('next') or url_for('.index'))
