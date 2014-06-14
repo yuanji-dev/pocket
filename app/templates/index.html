@@ -30,6 +30,7 @@
 
             {% if current_user.is_authenticated() %}
                 <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+                    {% if current_user.get_tags_count() %}
                     {% for tag,count in current_user.get_tags_count() %}
                         <div class="bs-example">
                             <a href="{{ url_for('main.tag', name=tag) }}">
@@ -38,6 +39,7 @@
                         </div>
                     {% endfor %}
                 </div>
+                    {% else %}nothing{% endif %}
             {% else %}nothing{% endif %}
 
         </div>
