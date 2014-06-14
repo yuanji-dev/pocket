@@ -15,7 +15,8 @@ class DevelopmentConfig(Config):
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'dev-date.sqlite')
     SECRET_KEY = 'hello'
     BOOTSTRAP_SERVE_LOCAL = True
-    SERVER_NAME = '127.0.0.1:9527'
+    # https://github.com/mitsuhiko/flask/issues/323
+    SERVER_NAME = 'localhost:9527'
 
 
 class ProductionConfig(Config):
