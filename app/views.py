@@ -88,11 +88,17 @@ def add():
 @login_required
 def delete(id):
     item = Item.query.filter_by(id=id).first()
-    current_user.items.remove(item)
-    db.session.add(current_user)
-    db.session.delete(item)
-    db.session.commit()
-    return redirect(url_for('.index'))
+    items = current_user.items.all()
+    if not item or item not in items:
+        flash('no such item.')
+        return redirect(url_for('.index'))
+    else:
+        current_user.items.remove(item)
+        db.session.add(current_user)
+        db.session.delete(item)
+        db.session.commit()
+        flash('delete successfully.')
+        return redirect(url_for('.index'))
 
 
 @main.route('/a/<id>')

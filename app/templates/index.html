@@ -17,6 +17,8 @@
                             <a href="{{ url_for('main.rmstar', id=item.id) }}"><span
                                     class="glyphicon glyphicon-star"></span></a>
                         {% endif %}
+                        <a href="{{ url_for('main.delete', id=item.id) }}"><span
+                                class="glyphicon glyphicon-trash"></span></a>
                         <div class="bs-example">
                             {% for tag in item.tags %}
                                 <a href="{{ url_for('main.tag', name=tag.name) }}">

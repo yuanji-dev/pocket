@@ -8,7 +8,7 @@ db = SQLAlchemy()
 login_manager = LoginManager()
 login_manager.login_view = 'main.login'
 #use encoding=utf-8
-login_manager.login_message = u'你好'
+login_manager.login_message = u'please login first.'
 bs = Bootstrap()
 
 
