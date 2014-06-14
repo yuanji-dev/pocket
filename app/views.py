@@ -163,3 +163,10 @@ def s():
         return redirect(request.args.get('next') or url_for('.index'))
     else:
         return render_template('star.html', items=items)
+
+
+# todo add complete the search func.
+@main.route('/search/<keyword>')
+@login_required
+def search():
+    pass
