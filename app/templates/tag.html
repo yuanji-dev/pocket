@@ -19,7 +19,8 @@
                         {% endif %}
                         <div class="bs-example">
                             {% for tag in item.tags %}
-                                <span class="label label-info">{{ tag.name }}</span>
+                                <a href="{{ url_for('main.tag', name=tag.name) }}">
+                                    <span class="label label-info">{{ tag.name }}</span></a>
                             {% endfor %}
                             <span class="label label-primary">{{ item.domain }}</span>
                         </div>

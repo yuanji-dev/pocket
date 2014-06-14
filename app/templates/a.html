@@ -18,23 +18,16 @@
                         {% endif %}
                     </h1>
                     <div class="bs-example">
-                        {{ item.content|safe }}
                         {% for tag in item.tags %}
-                            <span class="label label-info">{{ tag.name }}</span>
+                            <a href="{{ url_for('main.tag', name=tag.name) }}">
+                                <span class="label label-info">{{ tag.name }}</span></a>
                         {% endfor %}
+                    </div>
+                    <div class="bs-example">
+                        {{ item.content|safe }}
                     </div>
                 {% else %}nothing{% endif %}
             </div>
-
-            {% if current_user.is_authenticated() %}
-                <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
-                    {% for tag in item.tags %}
-                        <div class="bs-example">
-                            <span class="label label-info">{{ tag.name }}</span>
-                        </div>
-                    {% endfor %}
-                </div>
-            {% else %}nothing{% endif %}
         </div>
 
     </div>
