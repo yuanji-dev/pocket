@@ -12,12 +12,11 @@ from app import db, login_manager
 from config import Config
 from flask import abort, flash
 # todo add timeline for item.
-#todo add user last_seen time
+# todo add user last_seen time
 #todo add item_read time
 #todo save it forever powerful search suggested tags.
 #todo add email func
 #todo use many to many model between user and item.
-#todo add if a user is confirmed.
 #todo review length of field.
 #todo understand what the lazy in column mean.
 # todo add api for cross-platform use.etc: CLI, mobile device, desktop etc;
@@ -108,7 +107,6 @@ class Item(db.Model):
         except:
             # todo use user-friendly error handler.
             abort(400)
-
 
 
     # todo add/modify add_tags fun.
