@@ -114,6 +114,13 @@ class Item(db.Model):
         pass
 
 
+    def get_tags(self):
+        tags = []
+        for tag in self.tags:
+            tags.append(tag.name)
+        return tags
+
+
 class Tag(db.Model):
     __tablename__ = 'tags'
     id = db.Column(db.Integer, primary_key=True)

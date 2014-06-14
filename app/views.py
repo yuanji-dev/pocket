@@ -23,8 +23,7 @@ def before_request():
 
 @main.route('/')
 def index():
-    users = User.query.all()
-    return render_template('index.html', users=users)
+    return render_template('index.html')
 
 
 @main.route('/login', methods=['GET', 'POST'])
@@ -138,3 +137,18 @@ def rmstar(id):
         db.session.commit()
         flash('you destarred the item.')
         return redirect(request.args.get('next') or url_for('.index'))
+
+
+@main.route('/tag/<name>')
+@login_required
+def tag(name):
+    all_items = current_user.items.all()
+    items = []
+    for item in all_items:
+        if name in item.get_tags():
+            items.append(item)
+    if not items:
+        flash('not item has this tag.')
+        return redirect(request.args.get('next') or url_for('.index'))
+    else:
+        return render_template('tag.html', items=items)
