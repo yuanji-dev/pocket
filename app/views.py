@@ -151,7 +151,7 @@ def tag(name):
         flash('not item has this tag.')
         return redirect(request.args.get('next') or url_for('.index'))
     else:
-        return render_template('tag.html', items=items)
+        return render_template('tag.html', items=items, tag=name)
 
 
 @main.route('/star')

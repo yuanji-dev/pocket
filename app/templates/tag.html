@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block title %}
-    tag
+    {{ tag }}
 {% endblock %}
 {% block main %}
     <div class="container">
@@ -11,10 +11,10 @@
                     {% for item in items %}
                         <a href="{{ url_for('main.a', id=item.id) }}">{{ item.title }}</a>
                         {% if not item.is_star %}
-                            <a href="{{ url_for('main.star', id=item.id) }}"><span
+                            <a href="{{ url_for('main.star', id=item.id, next=url_for('main.tag', name=tag)) }}"><span
                                     class="glyphicon glyphicon-star-empty"></span></a>
                         {% else %}
-                            <a href="{{ url_for('main.rmstar', id=item.id) }}"><span
+                            <a href="{{ url_for('main.rmstar', id=item.id, next=url_for('main.tag', name=tag)) }}"><span
                                     class="glyphicon glyphicon-star"></span></a>
                         {% endif %}
                         <div class="bs-example">
