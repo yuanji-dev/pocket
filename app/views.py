@@ -100,7 +100,12 @@ def delete(id):
 @login_required
 def a(id):
     item = Item.query.filter_by(id=id).first()
-    return render_template('a.html', item=item)
+    items = current_user.items.all()
+    if item not in items:
+        flash('this item is not yours.')
+        return redirect(request.args.get('next') or url_for('.index'))
+    else:
+        return render_template('a.html', item=item)
 
 
 @main.route('/star/<id>')
