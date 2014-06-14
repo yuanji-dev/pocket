@@ -152,3 +152,14 @@ def tag(name):
         return redirect(request.args.get('next') or url_for('.index'))
     else:
         return render_template('tag.html', items=items)
+
+
+@main.route('/star')
+@login_required
+def s():
+    items = current_user.items.filter_by(is_star=True).all()
+    if not items:
+        flash('not star item.')
+        return redirect(request.args.get('next') or url_for('.index'))
+    else:
+        return render_template('star.html', items=items)

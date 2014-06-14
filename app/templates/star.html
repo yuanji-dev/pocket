@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %}
+    index
+{% endblock %}
+{% block main %}
+    <div class="container">
+
+        <div class="row">
+            <div class="col-sm-8 blog-main">
+                {% if current_user.is_authenticated() %}
+                    {% for item in items %}
+                        <a href="{{ url_for('main.a', id=item.id) }}">{{ item.title }}</a>
+                        {% if not item.is_star %}
+                            <a href="{{ url_for('main.star', id=item.id) }}"><span
+                                    class="glyphicon glyphicon-star-empty"></span></a>
+                        {% else %}
+                            <a href="{{ url_for('main.rmstar', id=item.id) }}"><span
+                                    class="glyphicon glyphicon-star"></span></a>
+                        {% endif %}
+                        <div class="bs-example">
+                            {% for tag in item.tags %}
+                                <a href="{{ url_for('main.tag', name=tag.name) }}">
+                                    <span class="label label-info">{{ tag.name }}</span></a>
+                            {% endfor %}
+                            <span class="label label-primary">{{ item.domain }}</span>
+                        </div>
+                    {% endfor %}
+                {% else %}nothing{% endif %}
+            </div>
+
+
+        </div>
+
+    </div>
+{% endblock %}
