@@ -29,7 +29,7 @@
 
             {% if current_user.is_authenticated() %}
                 <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
-                {% for tag,count in current_user.get_tags() %}
+                {% for tag,count in current_user.get_tags_count() %}
                     <div class="bs-example">
                         <span class="label label-info">{{ tag }}</span>
                         <span class="badge">{{ count }}</span>
