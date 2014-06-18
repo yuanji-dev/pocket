@@ -38,3 +38,8 @@ class AddItemForm(Form):
     link = StringField('Link', validators=[Required()])
     tags = StringField('Tags')
     submit = SubmitField('Add')
+
+
+class SearchForm(Form):
+    keyword = StringField('Keyword')
+    submit = SubmitField('Submit')
