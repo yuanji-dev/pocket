@@ -3,30 +3,24 @@
     index
 {% endblock %}
 {% block main %}
-    <div class="container">
-
-        <div class="row">
-            <div class="col-sm-8 blog-main">
-                {% if current_user.is_authenticated() %}
-                    {% for item in items %}
-                        <a href="{{ url_for('main.a', id=item.id) }}">{{ item.title }}</a>
-                        <a href="{{ url_for('main.rmstar', id=item.id, next=url_for('main.s')) }}"><span
-                                    class="glyphicon glyphicon-star"></span></a>
-                        <a href="{{ url_for('main.delete', id=item.id, next=url_for('main.s')) }}"><span
-                                class="glyphicon glyphicon-trash"></span></a>
-                        <div class="bs-example">
-                            {% for tag in item.tags %}
-                                <a href="{{ url_for('main.tag', name=tag.name) }}">
-                                    <span class="label label-info">{{ tag.name }}</span></a>
-                            {% endfor %}
-                            <span class="label label-primary">{{ item.domain }}</span>
-                        </div>
-                    {% endfor %}
-                {% else %}nothing{% endif %}
-            </div>
-
-
+    <div class="row">
+        <div class="col-sm-8 blog-main">
+            {% if current_user.is_authenticated() %}
+                {% for item in items %}
+                    <a href="{{ url_for('main.a', id=item.id) }}">{{ item.title }}</a>
+                    <a href="{{ url_for('main.rmstar', id=item.id, next=url_for('main.s')) }}"><span
+                            class="glyphicon glyphicon-star"></span></a>
+                    <a href="{{ url_for('main.delete', id=item.id, next=url_for('main.s')) }}"><span
+                            class="glyphicon glyphicon-trash"></span></a>
+                    <div class="bs-example">
+                        {% for tag in item.tags %}
+                            <a href="{{ url_for('main.tag', name=tag.name) }}">
+                                <span class="label label-info">{{ tag.name }}</span></a>
+                        {% endfor %}
+                        <span class="label label-primary">{{ item.domain }}</span>
+                    </div>
+                {% endfor %}
+            {% else %}nothing{% endif %}
         </div>
-
     </div>
 {% endblock %}
