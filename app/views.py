@@ -174,5 +174,10 @@ def s():
 # todo add complete the search func.
 @main.route('/search/<keyword>')
 @login_required
-def search():
-    pass
+def search(keyword):
+    items = current_user.items.filter_by(title.like('%' + keyword + '%')).all()
+    if not items:
+        flash('no such items.')
+        return redirect(request.args.get('next') or url_for('.index'))
+    else:
+        return render_template('search.html', items=items)
