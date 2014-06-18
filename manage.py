@@ -12,7 +12,7 @@ migrate = Migrate(app, db)
 
 @manager.command
 def runserver():
-    app.run()
+    app.run(host='0.0.0.0')
 
 
 def make_shell_context():

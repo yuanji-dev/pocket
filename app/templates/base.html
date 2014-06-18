@@ -20,7 +20,6 @@
                     <li><a href="{{ url_for('main.s') }}">Star</a></li>
                     <li><a href="#">Archives</a></li>
                 </ul>
-                #todo how to get?
                 <form class="navbar-form navbar-left" role="search">
                     <div class="form-group">
                         <input type="text" class="form-control" placeholder="Search">
@@ -59,8 +58,8 @@
         </div>
     {% endfor %}
     <div class="container">
-    {% block main %}
-    {% endblock %}
+        {% block main %}
+        {% endblock %}
     </div>
 {% endblock %}
 

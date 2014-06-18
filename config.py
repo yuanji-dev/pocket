@@ -16,7 +16,7 @@ class DevelopmentConfig(Config):
     SECRET_KEY = 'hello'
     BOOTSTRAP_SERVE_LOCAL = True
     # https://github.com/mitsuhiko/flask/issues/323
-    SERVER_NAME = 'localhost:9527'
+    # SERVER_NAME = 'localhost:9527'
 
 
 class ProductionConfig(Config):
