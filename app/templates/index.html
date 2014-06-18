@@ -3,36 +3,34 @@
     index
 {% endblock %}
 {% block main %}
-    <div class="container">
-
-        <div class="row">
-            <div class="col-sm-8 blog-main">
-                {% if current_user.is_authenticated() %}
-                    {% for item in current_user.items %}
-                        <a href="{{ url_for('main.a', id=item.id) }}">{{ item.title }}</a>
-                        {% if not item.is_star %}
-                            <a href="{{ url_for('main.star', id=item.id) }}"><span
-                                    class="glyphicon glyphicon-star-empty"></span></a>
-                        {% else %}
-                            <a href="{{ url_for('main.rmstar', id=item.id) }}"><span
-                                    class="glyphicon glyphicon-star"></span></a>
-                        {% endif %}
-                        <a href="{{ url_for('main.delete', id=item.id) }}"><span
-                                class="glyphicon glyphicon-trash"></span></a>
-                        <div class="bs-example">
-                            {% for tag in item.tags %}
-                                <a href="{{ url_for('main.tag', name=tag.name) }}">
-                                    <span class="label label-info">{{ tag.name }}</span></a>
-                            {% endfor %}
-                            <span class="label label-primary">{{ item.domain }}</span>
-                        </div>
-                    {% endfor %}
-                {% else %}nothing{% endif %}
-            </div>
-
+    <div class="row">
+        <div class="col-sm-8 blog-main">
             {% if current_user.is_authenticated() %}
-                <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
-                    {% if current_user.get_tags_count() %}
+                {% for item in current_user.items %}
+                    <a href="{{ url_for('main.a', id=item.id) }}">{{ item.title }}</a>
+                    {% if not item.is_star %}
+                        <a href="{{ url_for('main.star', id=item.id) }}"><span
+                                class="glyphicon glyphicon-star-empty"></span></a>
+                    {% else %}
+                        <a href="{{ url_for('main.rmstar', id=item.id) }}"><span
+                                class="glyphicon glyphicon-star"></span></a>
+                    {% endif %}
+                    <a href="{{ url_for('main.delete', id=item.id) }}"><span
+                            class="glyphicon glyphicon-trash"></span></a>
+                    <div class="bs-example">
+                        {% for tag in item.tags %}
+                            <a href="{{ url_for('main.tag', name=tag.name) }}">
+                                <span class="label label-info">{{ tag.name }}</span></a>
+                        {% endfor %}
+                        <span class="label label-primary">{{ item.domain }}</span>
+                    </div>
+                {% endfor %}
+            {% else %}nothing{% endif %}
+        </div>
+
+        {% if current_user.is_authenticated() %}
+            <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+                {% if current_user.get_tags_count() %}
                     {% for tag,count in current_user.get_tags_count() %}
                         <div class="bs-example">
                             <a href="{{ url_for('main.tag', name=tag) }}">
@@ -40,11 +38,9 @@
                                     class="badge">{{ count }}</span></a>
                         </div>
                     {% endfor %}
-                </div>
-                    {% else %}nothing{% endif %}
-            {% else %}nothing{% endif %}
-
-        </div>
+                    </div>
+                {% else %}nothing{% endif %}
+        {% else %}nothing{% endif %}
 
     </div>
 {% endblock %}
