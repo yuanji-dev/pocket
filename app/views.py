@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-from flask import Blueprint, flash, request
+from flask import Blueprint, flash, request, g
 from flask import render_template, redirect, url_for
 from flask.ext.login import login_user, login_required, logout_user, current_user
 from models import User, Item, Tag
-from forms import LoginForm, RegisterForm, AddItemForm
+from forms import LoginForm, RegisterForm, AddItemForm, SearchForm
 from app import db
 # todo del/star/archive view func.
 #todo add modify item func. eg:title etc.
@@ -17,6 +17,7 @@ main = Blueprint('main', __name__)
 @main.before_app_request  #todo what does this mean?
 def before_request():
     if current_user.is_authenticated():
+        g.search_form = SearchForm()
         if not current_user.is_confirmed:
             return "you are not confirmed."
 
@@ -172,10 +173,28 @@ def s():
 
 
 # todo add complete the search func.
-@main.route('/search/<keyword>')
+@main.route('/search', methods=['POST'])
 @login_required
-def search(keyword):
-    items = current_user.items.filter_by(title.like('%' + keyword + '%')).all()
+def search():
+    '''form = SearchForm()
+    if form.validate_on_submit():
+        items = current_user.items.filter_by(title.like('%' + keyword + '%')).all()
+        if not items:
+            flash('no such items.')
+            return redirect(request.args.get('next') or url_for('.index'))
+        else:
+            return render_template('search.html', items=items, form=form)'''
+    if g.search_form.validate_on_submit():
+        # return redirect(url_for('.index'))
+        return redirect(url_for('.search_result', keyword=g.search_form.keyword.data))
+    # return render_template('search.html', keyword=g.searh_form.keyword.data)
+    return redirect(url_for('.index'))
+
+
+@main.route('/search-result/<keyword>', methods=['GET', 'POST'])
+@login_required
+def search_result(keyword):
+    items = Item.query.filter(Item.user == current_user, Item.title.like('%' + keyword + '%')).all()
     if not items:
         flash('no such items.')
         return redirect(request.args.get('next') or url_for('.index'))

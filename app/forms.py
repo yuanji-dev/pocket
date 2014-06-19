@@ -3,7 +3,7 @@ from wtforms import StringField, PasswordField, BooleanField, SubmitField
 from wtforms.validators import Required, Length, Email, Regexp, EqualTo
 from wtforms import ValidationError
 from models import User
-#todo add i18n support.
+# todo add i18n support.
 
 class LoginForm(Form):
     #length?
@@ -42,4 +42,3 @@ class AddItemForm(Form):
 
 class SearchForm(Form):
     keyword = StringField('Keyword')
-    submit = SubmitField('Submit')
