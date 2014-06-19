@@ -20,8 +20,8 @@
                     <li><a href="{{ url_for('main.s') }}">Star</a></li>
                     <li><a href="#">Archives</a></li>
                 </ul>
-                <form class="navbar-form navbar-left" method="post" role="search" action="{{ url_for('main.search') }}">
-                    <div class="form-group">
+                <form class="navbar-form navbar-left" method="post" role="search" action="{{ url_for('main.query') }}">
+                <div class="form-group">
                         {{ g.search_form.csrf_token }}
                         {{ g.search_form.keyword(size=20, class="form-control", placeholder="Search") }}
                     </div>
