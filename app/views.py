@@ -200,3 +200,6 @@ def search(keyword):
         return redirect(request.args.get('next') or url_for('.index'))
     else:
         return render_template('search.html', items=items)
+
+
+        # todo add archive func.
