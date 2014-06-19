@@ -26,6 +26,9 @@
                         {% endfor %}
                         <span class="label label-primary">{{ item.domain }}</span>
                     </div>
+                    <div class="bs-example">
+                        {{ item.added_time }}
+                    </div>
                     <hr/>
                 {% endfor %}
             {% else %}nothing{% endif %}
