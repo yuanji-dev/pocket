@@ -7,6 +7,7 @@
         <div class="col-sm-8 blog-main">
             {% if current_user.is_authenticated() %}
                 {% for item in current_user.items %}
+                    <div class="bs-example">
                     <a href="{{ url_for('main.a', id=item.id) }}">{{ item.title }}</a>
                     {% if not item.is_star %}
                         <a href="{{ url_for('main.star', id=item.id) }}"><span
@@ -17,6 +18,7 @@
                     {% endif %}
                     <a href="{{ url_for('main.delete', id=item.id) }}"><span
                             class="glyphicon glyphicon-trash"></span></a>
+                    </div>
                     <div class="bs-example">
                         {% for tag in item.tags %}
                             <a href="{{ url_for('main.tag', name=tag.name) }}">

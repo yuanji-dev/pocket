@@ -7,16 +7,18 @@
         <div class="col-sm-8 blog-main">
             {% if current_user.is_authenticated() %}
                 {% for item in items %}
-                    <a href="{{ url_for('main.a', id=item.id) }}">{{ item.title }}</a>
-                    {% if not item.is_star %}
-                        <a href="{{ url_for('main.star', id=item.id, next=url_for('main.tag', name=tag)) }}"><span
-                                class="glyphicon glyphicon-star-empty"></span></a>
-                    {% else %}
-                        <a href="{{ url_for('main.rmstar', id=item.id, next=url_for('main.tag', name=tag)) }}"><span
-                                class="glyphicon glyphicon-star"></span></a>
-                    {% endif %}
-                    <a href="{{ url_for('main.delete', id=item.id, next=url_for('main.tag', name=tag)) }}"><span
-                            class="glyphicon glyphicon-trash"></span></a>
+                    <div class="bs-example">
+                        <a href="{{ url_for('main.a', id=item.id) }}">{{ item.title }}</a>
+                        {% if not item.is_star %}
+                            <a href="{{ url_for('main.star', id=item.id, next=url_for('main.tag', name=tag)) }}"><span
+                                    class="glyphicon glyphicon-star-empty"></span></a>
+                        {% else %}
+                            <a href="{{ url_for('main.rmstar', id=item.id, next=url_for('main.tag', name=tag)) }}"><span
+                                    class="glyphicon glyphicon-star"></span></a>
+                        {% endif %}
+                        <a href="{{ url_for('main.delete', id=item.id, next=url_for('main.tag', name=tag)) }}"><span
+                                class="glyphicon glyphicon-trash"></span></a>
+                    </div>
                     <div class="bs-example">
                         {% for tag in item.tags %}
                             <a href="{{ url_for('main.tag', name=tag.name) }}">
@@ -24,6 +26,7 @@
                         {% endfor %}
                         <span class="label label-primary">{{ item.domain }}</span>
                     </div>
+                    <hr/>
                 {% endfor %}
             {% else %}nothing{% endif %}
         </div>
