@@ -16,8 +16,8 @@ main = Blueprint('main', __name__)
 
 @main.before_app_request  #todo what does this mean?
 def before_request():
+    g.search_form = SearchForm()
     if current_user.is_authenticated():
-        g.search_form = SearchForm()
         if not current_user.is_confirmed:
             return "you are not confirmed."
 
