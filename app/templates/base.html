@@ -20,6 +20,7 @@
                     <li><a href="{{ url_for('main.s') }}">Star</a></li>
                     <li><a href="#">Archives</a></li>
                 </ul>
+                <!-- todo:add error handler? -->
                 <form class="navbar-form navbar-left" method="post" role="search" action="{{ url_for('main.query') }}">
                 <div class="form-group">
                         {{ g.search_form.csrf_token }}

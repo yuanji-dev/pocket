@@ -41,4 +41,4 @@ class AddItemForm(Form):
 
 
 class SearchForm(Form):
-    keyword = StringField('Keyword')
+    keyword = StringField('Keyword', validators=[Required()])
