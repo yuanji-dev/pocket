@@ -33,7 +33,7 @@ class RegisterForm(Form):
 
 
 #todo link regex
-#todo add validators
+# todo add validators and length limit.
 class AddItemForm(Form):
     link = StringField('Link', validators=[Required()])
     tags = StringField('Tags')
