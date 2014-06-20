@@ -191,6 +191,7 @@ def query():
     return redirect(url_for('.index'))
 
 
+# todo:fix a bug, if keyword is '/'
 @main.route('/search/<keyword>', methods=['GET', 'POST'])
 @login_required
 def search(keyword):
