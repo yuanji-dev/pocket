@@ -18,7 +18,7 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li><a href="{{ url_for('main.s') }}">Star</a></li>
-                    <li><a href="#">Archives</a></li>
+                    <li><a href="{{ url_for('main.archives') }}">Archives</a></li>
                 </ul>
                 <!-- todo:add error handler? -->
                 <form class="navbar-form navbar-left" method="post" role="search" action="{{ url_for('main.query') }}">

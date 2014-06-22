@@ -203,4 +203,12 @@ def search(keyword):
         return render_template('search.html', items=items)
 
 
-        # todo add archive func.
+@main.route('/archives')
+@login_required
+def archives():
+    items = Item.query.filter(Item.user == current_user, Item.is_archive == True)
+    if not items:
+        flash('no such items.')
+        return redirect(request.args.get('next') or url_for('.index'))
+    else:
+        return render_template('archives.html', items=items)
