@@ -161,15 +161,15 @@ def tag(name):
         return render_template('tag.html', items=items, tag=name)
 
 
-@main.route('/star')
+@main.route('/stars')
 @login_required
-def s():
+def stars():
     items = current_user.items.filter_by(is_star=True).all()
     if not items:
         flash('not star item.')
         return redirect(request.args.get('next') or url_for('.index'))
     else:
-        return render_template('star.html', items=items)
+        return render_template('stars.html', items=items)
 
 
 # todo add complete the search func.
