@@ -5,7 +5,7 @@ from flask.ext.login import login_user, login_required, logout_user, current_use
 from models import User, Item, Tag
 from forms import LoginForm, RegisterForm, AddItemForm, SearchForm
 from app import db
-# todo del/star/archive view func.
+
 #todo add modify item func. eg:title etc.
 #todo add search func. use ajax to auto-complete.
 #todo add participle as tag?
@@ -212,3 +212,33 @@ def archives():
         return redirect(request.args.get('next') or url_for('.index'))
     else:
         return render_template('archives.html', items=items)
+
+
+@main.route('/archive/<id>')
+@login_required
+def archive(id):
+    item = Item.query.filter(Item.user == current_user, Item.id == id).first()
+    if not item:
+        flash('no such item.')
+        return redirect(request.args.get('next') or url_for('.index'))
+    else:
+        item.is_archive = True
+        db.session.add(item)
+        db.session.commit()
+        flash('you archived the item.')
+        return redirect(request.args.get('next') or url_for('.index'))
+
+
+@main.route('/unarchive/<id>')
+@login_required
+def unarchive(id):
+    item = Item.query.filter(Item.user == current_user, Item.id == id).first()
+    if not item:
+        flash('no such item.')
+        return redirect(request.args.get('next') or url_for('.index'))
+    else:
+        item.is_archive = False
+        db.session.add(item)
+        db.session.commit()
+        flash('you unarchived the item.')
+        return redirect(request.args.get('next') or url_for('.index'))
