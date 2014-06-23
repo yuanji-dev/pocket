@@ -130,9 +130,9 @@ def star(id):
         return redirect(request.args.get('next') or url_for('.index'))
 
 
-@main.route('/rmstar/<id>')
+@main.route('/unstar/<id>')
 @login_required
-def rmstar(id):
+def unstar(id):
     item = Item.query.filter_by(id=id).first()
     items = current_user.items.all()
     if item not in items:

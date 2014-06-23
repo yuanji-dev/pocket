@@ -13,7 +13,7 @@
                             <a href="{{ url_for('main.star', id=item.id) }}"><span
                                     class="glyphicon glyphicon-star-empty"></span></a>
                         {% else %}
-                            <a href="{{ url_for('main.rmstar', id=item.id) }}"><span
+                            <a href="{{ url_for('main.unstar', id=item.id) }}"><span
                                     class="glyphicon glyphicon-star"></span></a>
                         {% endif %}
                         <a href="{{ url_for('main.delete', id=item.id) }}"><span
