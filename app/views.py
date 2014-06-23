@@ -111,7 +111,7 @@ def a(id):
         flash('this item is not yours.')
         return redirect(request.args.get('next') or url_for('.index'))
     else:
-        return render_template('a.html', item=item)
+        return render_template('a.html', item=item, title=item.title)
 
 
 @main.route('/star/<id>')
