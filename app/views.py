@@ -196,7 +196,7 @@ def search(keyword):
 @main.route('/archives')
 @login_required
 def archives():
-    items = Item.query.filter(Item.user == current_user, Item.is_archive == True)
+    items = Item.query.filter(Item.user == current_user, Item.is_archive == True).all()
     if not items:
         flash('no such items.')
         return redirect(request.args.get('next') or url_for('.index'))
