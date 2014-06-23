@@ -9,6 +9,8 @@
                 {% for item in items %}
                     <div class="bs-example">
                         <a href="{{ url_for('main.a', id=item.id) }}">{{ item.title }}</a>
+                        <a href="{{ url_for('main.unarchive', id=item.id, next=url_for('main.archives')) }}"><span
+                                class="glyphicon glyphicon-plus" title="unarchive"></span></a>
                         {% if not item.is_star %}
                             <a href="{{ url_for('main.star', id=item.id, next=url_for('main.archives')) }}"><span
                                     class="glyphicon glyphicon-star-empty"></span></a>

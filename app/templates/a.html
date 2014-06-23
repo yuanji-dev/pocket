@@ -9,6 +9,13 @@
             <div class="col-sm-8 blog-main">
                 {% if current_user.is_authenticated() %}
                     <h1> {{ item.title }}
+                        {% if item.is_archive %}
+                            <a href="{{ url_for('main.unarchive', id=item.id, next=url_for('main.a', id=item.id)) }}"><span
+                                    class="glyphicon glyphicon-plus" title="unarchive"></span></a>
+                        {% else %}
+                            <a href="{{ url_for('main.archive', id=item.id, next=url_for('main.a', id=item.id)) }}"><span
+                                    class="glyphicon glyphicon-ok" title="archive"></span></a>
+                        {% endif %}
                         {% if not item.is_star %}
                             <a href="{{ url_for('main.star', id=item.id, next=url_for('main.a', id=item.id)) }}"><span
                                     class="glyphicon glyphicon-star-empty"></span></a>
@@ -16,6 +23,8 @@
                             <a href="{{ url_for('main.unstar', id=item.id, next=url_for('main.a', id=item.id)) }}"><span
                                     class="glyphicon glyphicon-star"></span></a>
                         {% endif %}
+                        <a href="{{ url_for('main.delete', id=item.id) }}"><span
+                                class="glyphicon glyphicon-trash"></span></a>
                     </h1>
                     <div class="bs-example">
                         {% for tag in item.tags %}

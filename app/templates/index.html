@@ -10,7 +10,9 @@
                     {% if item.is_archive == False %}
                     <div class="bs-example">
                     <a href="{{ url_for('main.a', id=item.id) }}">{{ item.title }}</a>
-                    {% if not item.is_star %}
+                        <a href="{{ url_for('main.archive', id=item.id) }}"><span
+                                class="glyphicon glyphicon-ok" title="archive"></span></a>
+                        {% if not item.is_star %}
                         <a href="{{ url_for('main.star', id=item.id) }}"><span
                                 class="glyphicon glyphicon-star-empty"></span></a>
                     {% else %}
