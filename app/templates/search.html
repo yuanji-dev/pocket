@@ -10,20 +10,20 @@
                     <div class="bs-example">
                         <a href="{{ url_for('main.a', id=item.id) }}">{{ item.title }}</a>
                         {% if item.is_archive %}
-                            <a href="{{ url_for('main.unarchive', id=item.id) }}"><span
+                            <a href="{{ url_for('main.unarchive', id=item.id, next=url_for('main.search', keyword=keyword)) }}"><span
                                     class="glyphicon glyphicon-plus" title="unarchive"></span></a>
                         {% else %}
-                            <a href="{{ url_for('main.archive', id=item.id) }}"><span
+                            <a href="{{ url_for('main.archive', id=item.id, next=url_for('main.search', keyword=keyword)) }}"><span
                                     class="glyphicon glyphicon-ok" title="archive"></span></a>
                         {% endif %}
                         {% if not item.is_star %}
-                            <a href="{{ url_for('main.star', id=item.id) }}"><span
+                            <a href="{{ url_for('main.star', id=item.id, next=url_for('main.search', keyword=keyword)) }}"><span
                                     class="glyphicon glyphicon-star-empty"></span></a>
                         {% else %}
-                            <a href="{{ url_for('main.unstar', id=item.id) }}"><span
+                            <a href="{{ url_for('main.unstar', id=item.id, next=url_for('main.search', keyword=keyword)) }}"><span
                                     class="glyphicon glyphicon-star"></span></a>
                         {% endif %}
-                        <a href="{{ url_for('main.delete', id=item.id) }}"><span
+                        <a href="{{ url_for('main.delete', id=item.id, next=url_for('main.search', keyword=keyword)) }}"><span
                                 class="glyphicon glyphicon-trash"></span></a>
                     </div>
                     <div class="bs-example">

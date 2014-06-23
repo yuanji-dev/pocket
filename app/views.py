@@ -176,18 +176,8 @@ def stars():
 @main.route('/query', methods=['POST'])
 @login_required
 def query():
-    '''form = SearchForm()
-    if form.validate_on_submit():
-        items = current_user.items.filter_by(title.like('%' + keyword + '%')).all()
-        if not items:
-            flash('no such items.')
-            return redirect(request.args.get('next') or url_for('.index'))
-        else:
-            return render_template('search.html', items=items, form=form)'''
     if g.search_form.validate_on_submit():
-        # return redirect(url_for('.index'))
         return redirect(url_for('.search', keyword=g.search_form.keyword.data))
-    # return render_template('search.html', keyword=g.searh_form.keyword.data)
     return redirect(url_for('.index'))
 
 
@@ -200,7 +190,7 @@ def search(keyword):
         flash('no such items.')
         return redirect(request.args.get('next') or url_for('.index'))
     else:
-        return render_template('search.html', items=items)
+        return render_template('search.html', items=items, keyword=keyword)
 
 
 @main.route('/archives')
