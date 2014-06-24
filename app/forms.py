@@ -1,6 +1,6 @@
 from flask.ext.wtf import Form
 from wtforms import StringField, PasswordField, BooleanField, SubmitField
-from wtforms.validators import Required, Length, Email, Regexp, EqualTo
+from wtforms.validators import Required, Length, Email, Regexp, EqualTo, URL
 from wtforms import ValidationError
 from models import User
 # todo add i18n support.
@@ -35,7 +35,7 @@ class RegisterForm(Form):
 #todo link regex
 # todo add validators and length limit.
 class AddItemForm(Form):
-    link = StringField('Link', validators=[Required()])
+    link = StringField('Link', validators=[Required(), URL(message="Wrong URL.")])
     tags = StringField('Tags')
     submit = SubmitField('Add')
 
