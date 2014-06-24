@@ -5,6 +5,7 @@ from flask.ext.login import login_user, login_required, logout_user, current_use
 from models import User, Item, Tag
 from forms import LoginForm, RegisterForm, AddItemForm, SearchForm
 from app import db
+from parse_html import parse_html
 
 #todo add modify item func. eg:title etc.
 #todo add search func. use ajax to auto-complete.
@@ -69,7 +70,7 @@ def add():
     if form.validate_on_submit():
         item = Item(link=form.link.data)
         # todo add error handler.
-        item.parse_html()
+        # item.parse_html()
         if form.tags.data:
             tags = form.tags.data.split(',')
             for tag in tags:
@@ -80,6 +81,7 @@ def add():
         current_user.items.append(item)
         db.session.add(current_user)
         db.session.commit()
+        parse_html(item.id)
         flash('a new item added.')
         return redirect(url_for('.index'))
     return render_template('add.html', form=form)
