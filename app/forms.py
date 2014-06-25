@@ -42,3 +42,9 @@ class AddItemForm(Form):
 
 class SearchForm(Form):
     keyword = StringField('Keyword', validators=[Required()])
+
+
+class EditItemForm(Form):
+    link = StringField('Link', validators=[Required(), URL(message="Wrong URL.")])
+    tags = StringField('Tags')
+    submit = SubmitField('Update')

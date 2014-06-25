@@ -17,12 +17,12 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li><a href="{{ url_for('main.stars') }}">Star</a></li>
+                    <li><a href="{{ url_for('main.stars') }}">Stars</a></li>
                     <li><a href="{{ url_for('main.archives') }}">Archives</a></li>
                 </ul>
                 <!-- todo:add error handler? -->
                 <form class="navbar-form navbar-left" method="post" role="search" action="{{ url_for('main.query') }}">
-                <div class="form-group">
+                    <div class="form-group">
                         {{ g.search_form.csrf_token }}
                         {{ g.search_form.keyword(size=20, class="form-control", placeholder="Search") }}
                     </div>

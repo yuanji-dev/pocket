@@ -3,10 +3,11 @@ from flask import Blueprint, flash, request, g
 from flask import render_template, redirect, url_for
 from flask.ext.login import login_user, login_required, logout_user, current_user
 from models import User, Item, Tag
-from forms import LoginForm, RegisterForm, AddItemForm, SearchForm
+from forms import LoginForm, RegisterForm, AddItemForm, SearchForm, EditItemForm
 from app import db
 from parse_html import parse_html
 
+# todo add tags page show all tags.
 #todo add modify item func. eg:title etc.
 #todo add search func. use ajax to auto-complete.
 #todo add participle as tag?
@@ -160,7 +161,7 @@ def tag(name):
         flash('not item has this tag.')
         return redirect(request.args.get('next') or url_for('.index'))
     else:
-        return render_template('tag.html', items=items, tag=name)
+        return render_template('tag.html', items=items)
 
 
 @main.route('/stars')
@@ -234,3 +235,29 @@ def unarchive(id):
         db.session.commit()
         flash('you unarchived the item.')
         return redirect(request.args.get('next') or url_for('.index'))
+
+
+@main.route('/edit/<id>', methods=['GET', 'POST'])
+@login_required
+def edit(id):
+    item = Item.query.filter(Item.user == current_user, Item.id == id).first()
+    if not item:
+        flash("no such item.")
+        return redirect(url_for('.index'))
+    form = EditItemForm()
+    if form.validate_on_submit():
+        if form.tags.data:
+            tags = form.tags.data.split(',')
+            for tag in tags:
+                if Tag.query.filter_by(name=tag).first():
+                    item.tags.append(Tag.query.filter_by(name=tag).first())
+                else:
+                    item.tags.append(Tag(name=tag))
+        db.session.add(item)
+        db.session.commit()
+        parse_html(item.id)
+        flash('item updated.')
+        return redirect(url_for('.index'))
+    form.link.data = item.link
+    form.tags.data = ','.join([tag.name for tag in item.tags])
+    return render_template('edit.html', form=form)

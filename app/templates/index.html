@@ -36,6 +36,8 @@
                                         <li><a href="{{ url_for('main.unstar', id=item.id) }}"><span
                                                 class="glyphicon glyphicon-star"></span> Unstar</a></li>
                                     {% endif %}
+                                    <li><a href="{{ url_for('main.edit', id=item.id) }}"><span
+                                            class="glyphicon glyphicon-edit"></span> Edit</a></li>
                                     <li class="divider"></li>
                                     <li><a class="label-danger" href="{{ url_for('main.delete', id=item.id) }}"><span
                                             class="glyphicon glyphicon-trash"></span> Delete</a></li>
