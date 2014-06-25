@@ -9,7 +9,11 @@
                 {% for item in current_user.items|reverse %}
                     {% if item.is_archive == False %}
                     <div class="bs-example">
-                        <a href="{{ url_for('main.a', id=item.id) }}">{{ item.link }}</a>
+                        {% if item.title %}
+                            <a href="{{ url_for('main.a', id=item.id) }}">{{ item.title }}</a>
+                        {% else %}
+                            <a href="{{ item.link }}">{{ item.link }}</a>
+                        {% endif %}
                         <a href="{{ url_for('main.archive', id=item.id) }}"><span
                                 class="glyphicon glyphicon-ok" title="archive"></span></a>
                         {% if not item.is_star %}
