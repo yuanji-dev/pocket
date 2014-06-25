@@ -32,9 +32,7 @@
                                 <span class="label label-info">{{ tag.name }}</span></a>
                         {% endfor %}
                         <span class="label label-primary">{{ item.domain }}</span>
-                    </div>
-                    <div class="bs-example">
-                        {{ item.added_time }}
+                        <span class="label label-primary">{{ item.added_time.strftime("%Y-%m-%d %H:%M") }}</span>
                     </div>
                     <hr/>
                     {% endif %}

@@ -6,9 +6,17 @@
     <div class="container">
 
         <div class="row">
-            <div class="col-sm-8 blog-main">
+            <div class="col-sm-8 col-sm-offset-1">
                 {% if current_user.is_authenticated() %}
-                    <h1> {{ item.title }}
+                    <h1> <a href="{{ item.link }}">{{ item.title }}</a></h1>
+                    <div class="bs-example">
+                        {% for tag in item.tags %}
+                            <a href="{{ url_for('main.tag', name=tag.name) }}">
+                                <span class="label label-info">{{ tag.name }}</span></a>
+                        {% endfor %}
+                        <span class="label label-primary">{{ item.domain }}</span>
+                        <span class="label label-primary">{{ item.added_time.strftime("%Y-%m-%d %H:%M") }}</span>
+
                         {% if item.is_archive %}
                             <a href="{{ url_for('main.unarchive', id=item.id, next=url_for('main.a', id=item.id)) }}"><span
                                     class="glyphicon glyphicon-plus" title="unarchive"></span></a>
@@ -25,12 +33,6 @@
                         {% endif %}
                         <a href="{{ url_for('main.delete', id=item.id) }}"><span
                                 class="glyphicon glyphicon-trash"></span></a>
-                    </h1>
-                    <div class="bs-example">
-                        {% for tag in item.tags %}
-                            <a href="{{ url_for('main.tag', name=tag.name) }}">
-                                <span class="label label-info">{{ tag.name }}</span></a>
-                        {% endfor %}
                     </div>
                     <div class="bs-example">
                         {{ item.content|safe }}

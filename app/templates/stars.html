@@ -4,9 +4,9 @@
 {% endblock %}
 {% block main %}
     <div class="row">
-        <div class="col-sm-8 blog-main">
+        <div class="col-sm-8 col-sm-offset-2">
             {% if current_user.is_authenticated() %}
-                {% for item in items %}
+                {% for item in items|reverse %}
                     <div class="bs-example">
                         <a href="{{ url_for('main.a', id=item.id) }}">{{ item.title }}</a>
                         {% if item.is_archive %}
@@ -27,6 +27,7 @@
                                 <span class="label label-info">{{ tag.name }}</span></a>
                         {% endfor %}
                         <span class="label label-primary">{{ item.domain }}</span>
+                        <span class="label label-primary">{{ item.added_time.strftime("%Y-%m-%d %H:%M") }}</span>
                     </div>
                     <hr/>
                 {% endfor %}
