@@ -35,4 +35,4 @@ def parse_html(id):
     app = current_app._get_current_object()
     thr = Thread(target=async_parse_html, args=[app, id])
     thr.start()
-    return thr
+    # return thr
