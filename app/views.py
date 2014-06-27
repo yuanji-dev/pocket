@@ -8,7 +8,6 @@ from app import db
 from parse_html import parse_html
 
 # todo add tags page show all tags.
-#todo add modify item func. eg:title etc.
 #todo add search func. use ajax to auto-complete.
 #todo add participle as tag?
 #todo add pagination
@@ -184,8 +183,8 @@ def query():
     return redirect(url_for('.index'))
 
 
-# todo:fix a bug, if keyword is '/'
-@main.route('/search/<keyword>', methods=['GET', 'POST'])
+# todo:fix a bug, if keyword is only '/'
+@main.route('/search/<path:keyword>', methods=['GET', 'POST'])
 @login_required
 def search(keyword):
     items = Item.query.filter(Item.user == current_user, Item.title.like('%' + keyword + '%')).all()
