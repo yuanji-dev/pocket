@@ -3,7 +3,7 @@ from flask import Blueprint, flash, request, g
 from flask import render_template, redirect, url_for
 from flask.ext.login import login_user, login_required, logout_user, current_user
 from models import User, Item, Tag
-from forms import LoginForm, RegisterForm, AddItemForm, SearchForm, EditItemForm
+from forms import LoginForm, RegisterForm, AddItemForm, SearchForm, EditItemForm, ChangePasswordForm
 from app import db
 from parse_html import parse_html
 
@@ -262,7 +262,17 @@ def edit(id):
     return render_template('edit.html', form=form)
 
 
-@main.route('/settings')
+@main.route('/settings/change-password', methods=['GET', 'POST'])
 @login_required
-def settings():
-    pass
+def change_password():
+    form = ChangePasswordForm()
+    if form.validate_on_submit():
+        if current_user.check_password(form.current_password.data):
+            current_user.password = form.new_password.data
+            db.session.add(current_user)
+            db.session.commit()
+            flash('new password set.')
+            return redirect(url_for('.index'))
+        else:
+            flash('old password is invalid')
+    return render_template('settings/change-password.html', form=form)

@@ -1,6 +1,6 @@
 from flask.ext.wtf import Form
 from wtforms import StringField, PasswordField, BooleanField, SubmitField
-from wtforms.validators import Required, Length, Email, Regexp, EqualTo, URL
+from wtforms.validators import Required, Length, Email, EqualTo, URL
 from wtforms import ValidationError
 from models import User
 # todo add i18n support.
@@ -47,4 +47,12 @@ class SearchForm(Form):
 class EditItemForm(Form):
     link = StringField('Link', validators=[Required(), URL(message="Wrong URL.")])
     tags = StringField('Tags')
+    submit = SubmitField('Update')
+
+
+class ChangePasswordForm(Form):
+    current_password = PasswordField('Current Password', validators=[Required()])
+    new_password = PasswordField('New Password',
+                                 validators=[Required(), EqualTo('repassword', message='password not match')])
+    repassword = PasswordField('Confirm Password', validators=[Required()])
     submit = SubmitField('Update')
