@@ -260,3 +260,9 @@ def edit(id):
     form.link.data = item.link
     form.tags.data = ','.join([tag.name for tag in item.tags])
     return render_template('edit.html', form=form)
+
+
+@main.route('/settings')
+@login_required
+def settings():
+    pass
