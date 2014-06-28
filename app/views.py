@@ -245,6 +245,8 @@ def edit(id):
         return redirect(url_for('.index'))
     form = EditItemForm()
     if form.validate_on_submit():
+        # todo: is there a nicer solution?
+        item.tags = []
         if form.tags.data:
             tags = form.tags.data.split(',')
             for tag in tags:
