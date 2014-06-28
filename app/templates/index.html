@@ -24,7 +24,8 @@
                             <span class="label label-primary">{{ item.added_time.strftime("%Y-%m-%d %H:%M") }}</span>
 
                             <div class="btn-group">
-                            <span class="label label-success" data-toggle="dropdown"> Action <span class="caret"></span>
+                            <span class="btn label label-success" data-toggle="dropdown"> Action <span
+                                    class="caret"></span>
                             </span>
                                 <ul class="dropdown-menu" role="menu">
                                     <li><a href="{{ url_for('main.archive', id=item.id) }}"><span
