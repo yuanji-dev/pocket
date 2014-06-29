@@ -278,3 +278,10 @@ def change_password():
         else:
             flash('old password is invalid')
     return render_template('settings/change-password.html', form=form)
+
+
+# todo: use password to confirm this action.
+@main.route('/settings/drop-all')
+@login_required
+def drop_all():
+    pass

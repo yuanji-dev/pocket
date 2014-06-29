@@ -33,7 +33,7 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(length=64), unique=True, index=True)
     password_hash = db.Column(db.String(length=128))
     added_time = db.Column(db.DateTime, default=datetime.utcnow)
-    is_confirmed = db.Column(db.Boolean, default=False)
+    is_confirmed = db.Column(db.Boolean, default=True)
     items = db.relationship('Item', backref='user', lazy='dynamic')
 
     def __repr__(self):

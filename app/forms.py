@@ -6,7 +6,7 @@ from models import User
 # todo add i18n support.
 
 class LoginForm(Form):
-    #length?
+    # length?
     #add remember me option.
     email = StringField('Email', validators=[Required(), Length(1, 64), Email(message='wrong email.')])
     password = PasswordField('Password', validators=[Required()])
@@ -16,7 +16,7 @@ class LoginForm(Form):
 
 class RegisterForm(Form):
     email = StringField('Email', validators=[Required(), Length(1, 64), Email(message='wrong email.')])
-    #todo add re check.
+    # todo add re check.
     username = StringField('Username', validators=[Required()])
     password = PasswordField('Password',
                              validators=[Required(), EqualTo('repassword', message='Passwords dont match.')])
@@ -32,7 +32,6 @@ class RegisterForm(Form):
             raise ValidationError('Username has been registered.')
 
 
-#todo link regex
 # todo add validators and length limit.
 class AddItemForm(Form):
     link = StringField('Link', validators=[Required(), URL(message="Wrong URL.")])
