@@ -15,7 +15,7 @@ from parse_html import parse_html
 main = Blueprint('main', __name__)
 
 
-@main.before_app_request  #todo what does this mean?
+@main.before_app_request
 def before_request():
     g.search_form = SearchForm()
     if current_user.is_authenticated():
