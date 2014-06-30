@@ -3,7 +3,7 @@ from flask import Blueprint, flash, request, g
 from flask import render_template, redirect, url_for
 from flask.ext.login import login_user, login_required, logout_user, current_user
 from models import User, Item, Tag
-from forms import LoginForm, RegisterForm, AddItemForm, SearchForm, EditItemForm, ChangePasswordForm
+from forms import LoginForm, RegisterForm, AddItemForm, SearchForm, EditItemForm, ChangePasswordForm, DropAllForm
 from app import db
 from parse_html import parse_html
 
@@ -281,7 +281,18 @@ def change_password():
 
 
 # todo: use password to confirm this action.
-@main.route('/settings/drop-all')
+@main.route('/settings/drop-all', methods=['GET', 'POST'])
 @login_required
 def drop_all():
-    pass
+    form = DropAllForm()
+    if form.validate_on_submit():
+        if current_user.check_password(form.password.data):
+            # todo: bug:won't delete the relationship between tags and item.
+            Item.query.filter(Item.user == current_user).delete()
+            db.session.add(current_user)
+            db.session.commit()
+            flash('you have dropped all items.')
+            return redirect(url_for('.index'))
+        else:
+            flash('password is invalid')
+    return render_template('settings/drop-all.html', form=form)

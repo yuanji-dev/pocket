@@ -13,7 +13,7 @@ from config import Config
 from flask import abort, flash
 # todo add timeline for item.
 # todo add user last_seen time
-#todo add item_read time
+# todo add item_read time
 #todo save it forever powerful search suggested tags.
 #todo add email func
 #todo use many to many model between user and item.

@@ -55,3 +55,8 @@ class ChangePasswordForm(Form):
                                  validators=[Required(), EqualTo('repassword', message='password not match')])
     repassword = PasswordField('Confirm Password', validators=[Required()])
     submit = SubmitField('Update')
+
+
+class DropAllForm(Form):
+    password = PasswordField('Password', validators=[Required()])
+    submit = SubmitField('Drop All')
