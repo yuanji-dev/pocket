@@ -287,8 +287,10 @@ def drop_all():
     form = DropAllForm()
     if form.validate_on_submit():
         if current_user.check_password(form.password.data):
-            # todo: bug:won't delete the relationship between tags and item.
-            Item.query.filter(Item.user == current_user).delete()
+            items = current_user.items
+            current_user.items = []
+            for item in items:
+                db.session.delete(item)
             db.session.add(current_user)
             db.session.commit()
             flash('you have dropped all items.')
