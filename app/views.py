@@ -37,7 +37,7 @@ def login():
             #todo remember time fresh? how long remember?
             login_user(user, form.remember.data)
             return redirect(request.args.get('next') or url_for('.index'))
-        flash('Invalid email or password')
+        flash('Invalid email or password', 'warning')
     return render_template('login.html', form=form)
 
 
@@ -45,7 +45,7 @@ def login():
 @login_required
 def logout():
     logout_user()
-    flash('you have logged out')
+    flash('you have logged out', 'info')
     return redirect(url_for('.index'))
 
 
@@ -58,7 +58,7 @@ def register():
                     password=form.password.data)
         db.session.add(user)
         db.session.commit()
-        flash('you have successfully registered an account.')
+        flash('you have successfully registered an account.', 'success')
         return redirect(url_for('.index'))
     return render_template('register.html', form=form)
 
@@ -82,7 +82,7 @@ def add():
         db.session.add(current_user)
         db.session.commit()
         parse_html(item.id)
-        flash('a new item added.')
+        flash('a new item added.', 'success')
         return redirect(url_for('.index'))
     return render_template('add.html', form=form)
 
@@ -93,14 +93,14 @@ def delete(id):
     item = Item.query.filter_by(id=id).first()
     items = current_user.items.all()
     if not item or item not in items:
-        flash('no such item.')
+        flash('no such item.', 'info')
         return redirect(request.args.get('next') or url_for('.index'))
     else:
         current_user.items.remove(item)
         db.session.add(current_user)
         db.session.delete(item)
         db.session.commit()
-        flash('delete successfully.')
+        flash('delete successfully.', 'success')
         return redirect(request.args.get('next') or url_for('.index'))
 
 
@@ -110,7 +110,7 @@ def a(id):
     item = Item.query.filter_by(id=id).first()
     items = current_user.items.all()
     if item not in items:
-        flash('this item is not yours.')
+        flash('this item is not yours.', 'warning')
         return redirect(request.args.get('next') or url_for('.index'))
     else:
         return render_template('a.html', item=item, title=item.title)
@@ -122,13 +122,13 @@ def star(id):
     item = Item.query.filter_by(id=id).first()
     items = current_user.items.all()
     if item not in items:
-        flash('this item is not yours.')
+        flash('this item is not yours.', 'warning')
         return redirect(request.args.get('next') or url_for('.index'))
     else:
         item.is_star = True
         db.session.add(item)
         db.session.commit()
-        flash('you starred the item.')
+        flash('you starred the item.', 'info')
         return redirect(request.args.get('next') or url_for('.index'))
 
 
@@ -138,13 +138,13 @@ def unstar(id):
     item = Item.query.filter_by(id=id).first()
     items = current_user.items.all()
     if item not in items:
-        flash('this item is not yours.')
+        flash('this item is not yours.', 'warning')
         return redirect(request.args.get('next') or url_for('.index'))
     else:
         item.is_star = False
         db.session.add(item)
         db.session.commit()
-        flash('you destarred the item.')
+        flash('you destarred the item.', 'info')
         return redirect(request.args.get('next') or url_for('.index'))
 
 
@@ -157,7 +157,7 @@ def tag(name):
         if name in item.get_tags():
             items.append(item)
     if not items:
-        flash('not item has this tag.')
+        flash('not item has this tag.', 'warning')
         return redirect(request.args.get('next') or url_for('.index'))
     else:
         return render_template('tag.html', items=items)
@@ -168,7 +168,7 @@ def tag(name):
 def stars():
     items = current_user.items.filter_by(is_star=True).all()
     if not items:
-        flash('not star item.')
+        flash('not star item.', 'warning')
         return redirect(request.args.get('next') or url_for('.index'))
     else:
         return render_template('stars.html', items=items)
@@ -189,7 +189,7 @@ def query():
 def search(keyword):
     items = Item.query.filter(Item.user == current_user, Item.title.like('%' + keyword + '%')).all()
     if not items:
-        flash('no such items.')
+        flash('no such items.', 'warning')
         return redirect(request.args.get('next') or url_for('.index'))
     else:
         return render_template('search.html', items=items, keyword=keyword)
@@ -200,7 +200,7 @@ def search(keyword):
 def archives():
     items = Item.query.filter(Item.user == current_user, Item.is_archive == True).all()
     if not items:
-        flash('no such items.')
+        flash('no such items.', 'warning')
         return redirect(request.args.get('next') or url_for('.index'))
     else:
         return render_template('archives.html', items=items)
@@ -211,13 +211,13 @@ def archives():
 def archive(id):
     item = Item.query.filter(Item.user == current_user, Item.id == id).first()
     if not item:
-        flash('no such item.')
+        flash('no such item.', 'warning')
         return redirect(request.args.get('next') or url_for('.index'))
     else:
         item.is_archive = True
         db.session.add(item)
         db.session.commit()
-        flash('you archived the item.')
+        flash('you archived the item.', 'info')
         return redirect(request.args.get('next') or url_for('.index'))
 
 
@@ -226,13 +226,13 @@ def archive(id):
 def unarchive(id):
     item = Item.query.filter(Item.user == current_user, Item.id == id).first()
     if not item:
-        flash('no such item.')
+        flash('no such item.', 'warning')
         return redirect(request.args.get('next') or url_for('.index'))
     else:
         item.is_archive = False
         db.session.add(item)
         db.session.commit()
-        flash('you unarchived the item.')
+        flash('you unarchived the item.', 'info')
         return redirect(request.args.get('next') or url_for('.index'))
 
 
@@ -241,7 +241,7 @@ def unarchive(id):
 def edit(id):
     item = Item.query.filter(Item.user == current_user, Item.id == id).first()
     if not item:
-        flash("no such item.")
+        flash("no such item.", 'warning')
         return redirect(url_for('.index'))
     form = EditItemForm()
     if form.validate_on_submit():
@@ -257,7 +257,7 @@ def edit(id):
         db.session.add(item)
         db.session.commit()
         parse_html(item.id)
-        flash('item updated.')
+        flash('item updated.', 'info')
         return redirect(url_for('.index'))
     form.link.data = item.link
     form.tags.data = ','.join([tag.name for tag in item.tags])
@@ -273,14 +273,13 @@ def change_password():
             current_user.password = form.new_password.data
             db.session.add(current_user)
             db.session.commit()
-            flash('new password set.')
+            flash('new password set.', 'success')
             return redirect(url_for('.index'))
         else:
-            flash('old password is invalid')
+            flash('old password is invalid', 'warning')
     return render_template('settings/change-password.html', form=form)
 
 
-# todo: use password to confirm this action.
 @main.route('/settings/drop-all', methods=['GET', 'POST'])
 @login_required
 def drop_all():
@@ -293,8 +292,9 @@ def drop_all():
                 db.session.delete(item)
             db.session.add(current_user)
             db.session.commit()
-            flash('you have dropped all items.')
+            flash('you have dropped all items.', 'danger')
             return redirect(url_for('.index'))
         else:
-            flash('password is invalid')
+            flash('password is invalid', 'warning')
+    flash('You will drop all your items', 'danger')
     return render_template('settings/drop-all.html', form=form)
