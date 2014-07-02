@@ -5,37 +5,54 @@
 {% block main %}
     <div class="row">
         <div class="col-sm-10 col-sm-offset-1">
-        {% if current_user.is_authenticated() %}
+            {% if current_user.is_authenticated() %}
                 {% for item in items|reverse %}
                     <div class="bs-example">
                         <a href="{{ url_for('main.a', id=item.id) }}">{{ item.title }}</a>
-                        {% if item.is_archive %}
-                            <a href="{{ url_for('main.unarchive', id=item.id, next=url_for('main.search', keyword=keyword)) }}"><span
-                                    class="glyphicon glyphicon-plus" title="unarchive"></span></a>
-                        {% else %}
-                            <a href="{{ url_for('main.archive', id=item.id, next=url_for('main.search', keyword=keyword)) }}"><span
-                                    class="glyphicon glyphicon-ok" title="archive"></span></a>
-                        {% endif %}
-                        {% if not item.is_star %}
-                            <a href="{{ url_for('main.star', id=item.id, next=url_for('main.search', keyword=keyword)) }}"><span
-                                    class="glyphicon glyphicon-star-empty"></span></a>
-                        {% else %}
-                            <a href="{{ url_for('main.unstar', id=item.id, next=url_for('main.search', keyword=keyword)) }}"><span
-                                    class="glyphicon glyphicon-star"></span></a>
-                        {% endif %}
-                        <a href="{{ url_for('main.delete', id=item.id, next=url_for('main.search', keyword=keyword)) }}"><span
-                                class="glyphicon glyphicon-trash"></span></a>
                     </div>
                     <div class="bs-example">
-                        {% for tag in item.tags %}
-                            <a href="{{ url_for('main.tag', name=tag.name) }}">
-                                <span class="label label-info">{{ tag.name }}</span></a>
-                        {% endfor %}
-                        <span class="label label-primary">{{ item.domain }}</span>
+                    {% for tag in item.tags %}
+                        <a href="{{ url_for('main.tag', name=tag.name) }}">
+                            <span class="label label-info">{{ tag.name }}</span></a>
+                    {% endfor %}
+                    <span class="label label-primary">{{ item.domain }}</span>
                     <span class="label label-primary">{{ item.added_time.strftime("%Y-%m-%d %H:%M") }}</span>
+
+                    <div class="btn-group">
+                            <span class="btn label label-success" data-toggle="dropdown"> Action <span
+                                    class="caret"></span>
+                            </span>
+                        <ul class="dropdown-menu" role="menu">
+
+                            {% if item.is_archive %}
+                                <li>
+                                    <a href="{{ url_for('main.unarchive', id=item.id, next=url_for('main.search', keyword=keyword)) }}"><span
+                                            class="glyphicon glyphicon-plus" title="unarchive"></span> Unarchive</a>
+                                </li>
+                            {% else %}
+                                <li>
+                                    <a href="{{ url_for('main.archive', id=item.id, next=url_for('main.search', keyword=keyword)) }}"><span
+                                            class="glyphicon glyphicon-ok" title="archive"></span> Archive</a></li>
+                            {% endif %}
+                            {% if not item.is_star %}
+                                <li>
+                                    <a href="{{ url_for('main.star', id=item.id, next=url_for('main.search', keyword=keyword)) }}"><span
+                                            class="glyphicon glyphicon-star-empty"></span> Star</a></li>
+                            {% else %}
+                                <li>
+                                    <a href="{{ url_for('main.unstar', id=item.id, next=url_for('main.search', keyword=keyword)) }}"><span
+                                            class="glyphicon glyphicon-star"></span> Unstar</a></li>
+                            {% endif %}
+                            <li><a href="{{ url_for('main.edit', id=item.id) }}"><span
+                                    class="glyphicon glyphicon-edit"></span> Edit</a></li>
+                            <li class="divider"></li>
+                            <li><a class="label-danger" href="{{ url_for('main.delete', id=item.id) }}"><span
+                                    class="glyphicon glyphicon-trash"></span> Delete</a></li>
+                        </ul>
+                    </div>
                     <hr/>
                 {% endfor %}
             {% else %}nothing{% endif %}
+            </div>
         </div>
-    </div>
 {% endblock %}

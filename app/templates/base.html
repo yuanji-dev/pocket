@@ -32,11 +32,13 @@
                     {% if current_user.is_authenticated() %}
 
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Account <b class="caret"></b></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ current_user.name }} <b
+                                    class="caret"></b></a>
                             <ul class="dropdown-menu">
-                                <li><a href="{{ url_for('main.add') }}">Add</a></li>
+                                <li><a href="{{ url_for('main.add') }}">Add Item</a></li>
                                 <li class="divider"></li>
-                                <li><a href="{{ url_for('main.change_password') }}">Setting</a></li>
+                                <li><a href="{{ url_for('main.change_password') }}">Change Password</a></li>
+                                <li><a href="{{ url_for('main.drop_all') }}">Drop All</a></li>
                                 <li class="divider"></li>
                                 <li><a href="{{ url_for('main.logout') }}">Logout</a></li>
                             </ul>
@@ -54,17 +56,14 @@
 {% endblock %}
 {% block content %}
     <div class="container">
-        {# todo add message category:info success error. #}
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
-                <ul class=flashes>
                     {% for category, message in messages %}
                         <div class="alert alert-{{ category }} alert-dismissable">
                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                             {{ message }}
                         </div>
                     {% endfor %}
-                </ul>
             {% endif %}
         {% endwith %}
 
