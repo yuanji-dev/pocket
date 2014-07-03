@@ -24,5 +24,5 @@ class ProductionConfig(Config):
 
 
 class TestingConfig(Config):
-    DEBUG = True
+    WTF_CSRF_ENABLED = False
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'test-data.sqlite')
