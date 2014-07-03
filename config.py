@@ -12,7 +12,7 @@ class Config(object):
 
 class DevelopmentConfig(Config):
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'dev-date.sqlite')
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'dev-data.sqlite')
     SECRET_KEY = 'hello'
     BOOTSTRAP_SERVE_LOCAL = True
     # https://github.com/mitsuhiko/flask/issues/323
@@ -24,4 +24,5 @@ class ProductionConfig(Config):
 
 
 class TestingConfig(Config):
-    pass
+    DEBUG = True
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'test-data.sqlite')
