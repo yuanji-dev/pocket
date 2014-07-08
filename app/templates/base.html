@@ -17,16 +17,16 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li><a href="{{ url_for('main.stars') }}">Stars</a></li>
-                    <li><a href="{{ url_for('main.archives') }}">Archives</a></li>
+                    <li><a href="{{ url_for('main.stars') }}">星标条目</a></li>
+                    <li><a href="{{ url_for('main.archives') }}">存档</a></li>
                 </ul>
                 <!-- todo:add error handler? -->
                 <form class="navbar-form navbar-left" method="post" role="search" action="{{ url_for('main.query') }}">
                     <div class="form-group">
                         {{ g.search_form.csrf_token }}
-                        {{ g.search_form.keyword(size=20, class="form-control", placeholder="Search") }}
+                        {{ g.search_form.keyword(size=20, class="form-control", placeholder="关键字，如：Python") }}
                     </div>
-                    <button type="submit" class="btn btn-default">Submit</button>
+                    <button type="submit" class="btn btn-default">搜索</button>
                 </form>
                 <ul class="nav navbar-nav navbar-right">
                     {% if current_user.is_authenticated() %}
@@ -35,16 +35,17 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ current_user.name }} <b
                                     class="caret"></b></a>
                             <ul class="dropdown-menu">
-                                <li><a href="{{ url_for('main.add') }}">Add Item</a></li>
+                                <li><a href="{{ url_for('main.add') }}">新增条目</a></li>
                                 <li class="divider"></li>
-                                <li><a href="{{ url_for('main.change_password') }}">Change Password</a></li>
-                                <li><a href="{{ url_for('main.drop_all') }}">Drop All</a></li>
+                                <li><a href="{{ url_for('main.change_password') }}">更改密码</a></li>
+                                <li><a href="{{ url_for('main.drop_all') }}">清除所有条目</a></li>
                                 <li class="divider"></li>
-                                <li><a href="{{ url_for('main.logout') }}">Logout</a></li>
+                                <li><a href="{{ url_for('main.logout') }}">登出</a></li>
                             </ul>
                         </li>
                     {% else %}
-                        <li><a href="{{ url_for('main.login') }}">login</a></li>
+                        <li><a href="{{ url_for('main.login') }}">登录</a></li>
+                        <li><a href="{{ url_for('main.register') }}">注册</a></li>
                     {% endif %}
                 </ul>
             </div>
@@ -58,12 +59,12 @@
     <div class="container">
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
-                    {% for category, message in messages %}
-                        <div class="alert alert-{{ category }} alert-dismissable">
-                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                            {{ message }}
-                        </div>
-                    {% endfor %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} alert-dismissable">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        {{ message }}
+                    </div>
+                {% endfor %}
             {% endif %}
         {% endwith %}
 

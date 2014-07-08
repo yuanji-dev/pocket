@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block title %}
-    index
+    主页
 {% endblock %}
 {% block main %}
     <div class="row">
@@ -24,24 +24,24 @@
                             <span class="label label-primary">{{ item.added_time.strftime("%Y-%m-%d %H:%M") }}</span>
 
                             <div class="btn-group">
-                            <span class="btn label label-success" data-toggle="dropdown"> Action <span
+                            <span class="btn label label-success" data-toggle="dropdown"> 操作 <span
                                     class="caret"></span>
                             </span>
                                 <ul class="dropdown-menu" role="menu">
                                     <li><a href="{{ url_for('main.archive', id=item.id) }}"><span
-                                            class="glyphicon glyphicon-ok" title="archive"></span> Archive</a></li>
+                                            class="glyphicon glyphicon-ok" title="archive"></span> 存档</a></li>
                                     {% if not item.is_star %}
                                         <li><a href="{{ url_for('main.star', id=item.id) }}"><span
-                                                class="glyphicon glyphicon-star-empty"></span> Star</a></li>
+                                                class="glyphicon glyphicon-star-empty"></span> 添加星标</a></li>
                                     {% else %}
                                         <li><a href="{{ url_for('main.unstar', id=item.id) }}"><span
-                                                class="glyphicon glyphicon-star"></span> Unstar</a></li>
+                                                class="glyphicon glyphicon-star"></span> 去除星标</a></li>
                                     {% endif %}
                                     <li><a href="{{ url_for('main.edit', id=item.id) }}"><span
-                                            class="glyphicon glyphicon-edit"></span> Edit</a></li>
+                                            class="glyphicon glyphicon-edit"></span> 编辑</a></li>
                                     <li class="divider"></li>
                                     <li><a class="label-danger" href="{{ url_for('main.delete', id=item.id) }}"><span
-                                            class="glyphicon glyphicon-trash"></span> Delete</a></li>
+                                            class="glyphicon glyphicon-trash"></span> 删除</a></li>
                                 </ul>
                             </div>
                         </div>

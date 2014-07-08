@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block title %}
-    {{ tag }}
+    拥有标签「{{ tag }}」的条目
 {% endblock %}
 {% block main %}
     <div class="row">
@@ -9,23 +9,8 @@
                 {% for item in items|reverse %}
                     <div class="bs-example">
                         <a href="{{ url_for('main.a', id=item.id) }}">{{ item.title }}</a>
-                        {% if item.is_archive %}
-                            <a href="{{ url_for('main.unarchive', id=item.id, next=url_for('main.tag', name=tag)) }}"><span
-                                    class="glyphicon glyphicon-plus" title="unarchive"></span></a>
-                        {% else %}
-                            <a href="{{ url_for('main.archive', id=item.id, next=url_for('main.tag', name=tag)) }}"><span
-                                    class="glyphicon glyphicon-ok" title="archive"></span></a>
-                        {% endif %}
-                        {% if not item.is_star %}
-                            <a href="{{ url_for('main.star', id=item.id, next=url_for('main.tag', name=tag)) }}"><span
-                                    class="glyphicon glyphicon-star-empty"></span></a>
-                        {% else %}
-                            <a href="{{ url_for('main.unstar', id=item.id, next=url_for('main.tag', name=tag)) }}"><span
-                                    class="glyphicon glyphicon-star"></span></a>
-                        {% endif %}
-                        <a href="{{ url_for('main.delete', id=item.id, next=url_for('main.tag', name=tag)) }}"><span
-                                class="glyphicon glyphicon-trash"></span></a>
                     </div>
+
                     <div class="bs-example">
                         {% for tag in item.tags %}
                             <a href="{{ url_for('main.tag', name=tag.name) }}">
@@ -33,6 +18,42 @@
                         {% endfor %}
                         <span class="label label-primary">{{ item.domain }}</span>
                         <span class="label label-primary">{{ item.added_time.strftime("%Y-%m-%d %H:%M") }}</span>
+
+                        <div class="btn-group">
+                            <span class="btn label label-success" data-toggle="dropdown"> 操作 <span
+                                    class="caret"></span>
+                            </span>
+                            <ul class="dropdown-menu" role="menu">
+
+                                {% if item.is_archive %}
+                                    <li>
+                                        <a href="{{ url_for('main.unarchive', id=item.id, next=url_for('main.tag', name=tag)) }}"><span
+                                                class="glyphicon glyphicon-plus" title="unarchive"></span> 解除存档</a>
+                                    </li>
+                                {% else %}
+                                    <li>
+                                        <a href="{{ url_for('main.archive', id=item.id, next=url_for('main.tag', name=tag)) }}"><span
+                                                class="glyphicon glyphicon-ok" title="archive"></span> 存档</a></li>
+                                {% endif %}
+                                {% if not item.is_star %}
+                                    <li>
+                                        <a href="{{ url_for('main.star', id=item.id, next=url_for('main.tag', name=tag)) }}"><span
+                                                class="glyphicon glyphicon-star-empty"></span> 添加星标</a></li>
+                                {% else %}
+                                    <li>
+                                        <a href="{{ url_for('main.unstar', id=item.id, next=url_for('main.tag', name=tag)) }}"><span
+                                                class="glyphicon glyphicon-star"></span> 去除星标</a></li>
+                                {% endif %}
+                                <li>
+                                    <a href="{{ url_for('main.edit', id=item.id, next=url_for('main.tag', name=tag)) }}"><span
+                                            class="glyphicon glyphicon-edit"></span> 编辑</a></li>
+                                <li class="divider"></li>
+                                <li><a class="label-danger"
+                                       href="{{ url_for('main.delete', id=item.id, next=url_for('main.tag', name=tag)) }}"><span
+                                        class="glyphicon glyphicon-trash"></span> 删除</a></li>
+                            </ul>
+                        </div>
+
                     </div>
                     <hr/>
                 {% endfor %}

@@ -7,8 +7,8 @@ from flask.ext.bootstrap import Bootstrap
 db = SQLAlchemy()
 login_manager = LoginManager()
 login_manager.login_view = 'main.login'
-#use encoding=utf-8
-login_manager.login_message = u'please login first.'
+# use encoding=utf-8
+login_manager.login_message = u'请先登录！'
 login_manager.login_message_category = "info"
 bs = Bootstrap()
 

@@ -20,7 +20,7 @@ def before_request():
     g.search_form = SearchForm()
     if current_user.is_authenticated():
         if not current_user.is_confirmed:
-            return "you are not confirmed."
+            return u"您的账号尚未被确认。"
 
 
 @main.route('/')
@@ -36,16 +36,17 @@ def login():
         if user is not None and user.check_password(form.password.data):
             #todo remember time fresh? how long remember?
             login_user(user, form.remember.data)
+            flash(u'「{} 」，您已成功登录！'.format(user.name), 'success')
             return redirect(request.args.get('next') or url_for('.index'))
-        flash('Invalid email or password', 'warning')
+        flash(u'账号或密码有误，请重新登录。', 'warning')
     return render_template('login.html', form=form)
 
 
 @main.route('/logout')
 @login_required
 def logout():
+    flash(u'您的账号「{} 」以登出。'.format(current_user.name), 'info')
     logout_user()
-    flash('you have logged out', 'info')
     return redirect(url_for('.index'))
 
 
@@ -58,7 +59,7 @@ def register():
                     password=form.password.data)
         db.session.add(user)
         db.session.commit()
-        flash('you have successfully registered an account.', 'success')
+        flash(u'恭喜：您成功注册了账号「{} 」。'.format(user.name), 'success')
         return redirect(url_for('.index'))
     return render_template('register.html', form=form)
 
@@ -82,7 +83,7 @@ def add():
         db.session.add(current_user)
         db.session.commit()
         parse_html(item.id)
-        flash('a new item added.', 'success')
+        flash(u'已添加新条目：「{} 」。'.format(form.link.data), 'success')
         return redirect(url_for('.index'))
     return render_template('add.html', form=form)
 
@@ -93,14 +94,15 @@ def delete(id):
     item = Item.query.filter_by(id=id).first()
     items = current_user.items.all()
     if not item or item not in items:
-        flash('no such item.', 'info')
+        flash('不存在该条目。', 'info')
         return redirect(request.args.get('next') or url_for('.index'))
     else:
+        item_title = item.title or item.link
         current_user.items.remove(item)
         db.session.add(current_user)
         db.session.delete(item)
         db.session.commit()
-        flash('delete successfully.', 'success')
+        flash(u'成功删除条目：「{} 」。'.format(item_title), 'success')
         return redirect(request.args.get('next') or url_for('.index'))
 
 
@@ -110,7 +112,7 @@ def a(id):
     item = Item.query.filter_by(id=id).first()
     items = current_user.items.all()
     if item not in items:
-        flash('this item is not yours.', 'warning')
+        flash(u'不存在该条目。', 'warning')
         return redirect(request.args.get('next') or url_for('.index'))
     else:
         return render_template('a.html', item=item, title=item.title)
@@ -122,13 +124,14 @@ def star(id):
     item = Item.query.filter_by(id=id).first()
     items = current_user.items.all()
     if item not in items:
-        flash('this item is not yours.', 'warning')
+        flash(u'不存在该条目。', 'warning')
         return redirect(request.args.get('next') or url_for('.index'))
     else:
         item.is_star = True
+        item_title = item.title or item.link
         db.session.add(item)
         db.session.commit()
-        flash('you starred the item.', 'info')
+        flash(u'已为「{} 」添加星标。'.format(item_title), 'info')
         return redirect(request.args.get('next') or url_for('.index'))
 
 
@@ -138,13 +141,14 @@ def unstar(id):
     item = Item.query.filter_by(id=id).first()
     items = current_user.items.all()
     if item not in items:
-        flash('this item is not yours.', 'warning')
+        flash(u'不存在该条目。', 'warning')
         return redirect(request.args.get('next') or url_for('.index'))
     else:
         item.is_star = False
+        item_title = item.title or item.link
         db.session.add(item)
         db.session.commit()
-        flash('you destarred the item.', 'info')
+        flash(u'已为「{} 」去除星标。'.format(item_title), 'info')
         return redirect(request.args.get('next') or url_for('.index'))
 
 
@@ -157,10 +161,10 @@ def tag(name):
         if name in item.get_tags():
             items.append(item)
     if not items:
-        flash('not item has this tag.', 'warning')
+        flash(u'没有条目拥有标签：{}。'.format(name), 'warning')
         return redirect(request.args.get('next') or url_for('.index'))
     else:
-        return render_template('tag.html', items=items)
+        return render_template('tag.html', items=items, tag=name)
 
 
 @main.route('/stars')
@@ -168,7 +172,7 @@ def tag(name):
 def stars():
     items = current_user.items.filter_by(is_star=True).all()
     if not items:
-        flash('not star item.', 'warning')
+        flash(u'您目前没有任何星标条目。', 'warning')
         return redirect(request.args.get('next') or url_for('.index'))
     else:
         return render_template('stars.html', items=items)
@@ -189,7 +193,7 @@ def query():
 def search(keyword):
     items = Item.query.filter(Item.user == current_user, Item.title.like('%' + keyword + '%')).all()
     if not items:
-        flash('no such items.', 'warning')
+        flash(u'没有搜到任何关于{}的条目，建议缩小关键词。'.format(keyword), 'warning')
         return redirect(request.args.get('next') or url_for('.index'))
     else:
         return render_template('search.html', items=items, keyword=keyword)
@@ -200,7 +204,7 @@ def search(keyword):
 def archives():
     items = Item.query.filter(Item.user == current_user, Item.is_archive == True).all()
     if not items:
-        flash('no such items.', 'warning')
+        flash(u'您目前没有任何存档条目。', 'warning')
         return redirect(request.args.get('next') or url_for('.index'))
     else:
         return render_template('archives.html', items=items)
@@ -211,13 +215,14 @@ def archives():
 def archive(id):
     item = Item.query.filter(Item.user == current_user, Item.id == id).first()
     if not item:
-        flash('no such item.', 'warning')
+        flash(u'不存在该项目。', 'warning')
         return redirect(request.args.get('next') or url_for('.index'))
     else:
         item.is_archive = True
+        item_title = item.title or item.link
         db.session.add(item)
         db.session.commit()
-        flash('you archived the item.', 'info')
+        flash(u'「{} 」已被存档，将不会在首页显示。'.format(item_title), 'info')
         return redirect(request.args.get('next') or url_for('.index'))
 
 
@@ -226,13 +231,14 @@ def archive(id):
 def unarchive(id):
     item = Item.query.filter(Item.user == current_user, Item.id == id).first()
     if not item:
-        flash('no such item.', 'warning')
+        flash(u'不存在该条目。', 'warning')
         return redirect(request.args.get('next') or url_for('.index'))
     else:
         item.is_archive = False
+        item_title = item.title or item.link
         db.session.add(item)
         db.session.commit()
-        flash('you unarchived the item.', 'info')
+        flash(u'「{} 」被解除存档，将会在首页显示。'.format(item_title), 'info')
         return redirect(request.args.get('next') or url_for('.index'))
 
 
@@ -241,12 +247,13 @@ def unarchive(id):
 def edit(id):
     item = Item.query.filter(Item.user == current_user, Item.id == id).first()
     if not item:
-        flash("no such item.", 'warning')
+        flash(u"不存在该条目。", 'warning')
         return redirect(url_for('.index'))
     form = EditItemForm()
     if form.validate_on_submit():
         # todo: is there a nicer solution?
         item.tags = []
+        item.title = form.title.data
         if form.tags.data:
             tags = form.tags.data.split(',')
             for tag in tags:
@@ -256,10 +263,10 @@ def edit(id):
                     item.tags.append(Tag(name=tag))
         db.session.add(item)
         db.session.commit()
-        parse_html(item.id)
-        flash('item updated.', 'info')
-        return redirect(url_for('.index'))
-    form.link.data = item.link
+        # parse_html(item.id)
+        flash(u'「{} 」，此条目已更新。'.format(item.title or item.link), 'info')
+        return redirect(request.args.get('next') or url_for('.index'))
+    form.title.data = item.title
     form.tags.data = ','.join([tag.name for tag in item.tags])
     return render_template('edit.html', form=form)
 
@@ -273,10 +280,10 @@ def change_password():
             current_user.password = form.new_password.data
             db.session.add(current_user)
             db.session.commit()
-            flash('new password set.', 'success')
+            flash(u'新密码已设置。', 'success')
             return redirect(url_for('.index'))
         else:
-            flash('old password is invalid', 'warning')
+            flash(u'原密码有误，请重新输入。', 'warning')
     return render_template('settings/change-password.html', form=form)
 
 
@@ -292,9 +299,9 @@ def drop_all():
                 db.session.delete(item)
             db.session.add(current_user)
             db.session.commit()
-            flash('you have dropped all items.', 'danger')
+            flash(u'您已清空所有条目。', 'danger')
             return redirect(url_for('.index'))
         else:
-            flash('password is invalid', 'warning')
-    flash('You will drop all your items', 'danger')
+            flash(u'您输入的密码不正确！', 'warning')
+    flash(u'注意：您将会清空所有条目，此操作不可逆！', 'danger')
     return render_template('settings/drop-all.html', form=form)

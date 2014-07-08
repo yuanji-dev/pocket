@@ -1,22 +1,12 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Register</title>
-</head>
-<body>
-<form method="POST">
-    {# todo macro, error? raiseError? i18n? #}
-    {{ form.csrf_token }}
-    {{ form.email.label }}{{ form.email }}
-    {{ form.username.label }}{{ form.username }}
-    {{ form.password.label }}{{ form.password }}
-    {{ form.repassword.label }}{{ form.repassword }}
-    {{ form.submit }}
-    {% for field in form.errors %}
-        {% for error in form.errors[field] %}
-            {{ error }}
-        {% endfor %}
-    {% endfor %}
-</form>
-</body>
-</html>
+{% extends 'base.html' %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block title %}
+    注册
+{% endblock %}
+{% block main %}
+    <div class="row">
+        <div class="col-sm-6 col-sm-offset-3">
+            {{ wtf.quick_form(form) }}
+        </div>
+    </div>
+{% endblock %}
