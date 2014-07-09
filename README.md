@@ -21,6 +21,16 @@ pocket
 
 - [screenshot3](http://ww1.sinaimg.cn/large/4b31c31egw1ei6jmggeucj20k00zk0wy.jpg)
 
+##运行
+
+*建议使用virtualenv*
+
+1. `git clone https://github.com/Masakichi/pocket.git`
+2. `cd pocket && pip install -r requirements.txt`
+3. `python manage.py shell`
+4. `db.create_all()`
+5. `python manage.py runserver`
+
 ##TODO
 
 - 添加API
